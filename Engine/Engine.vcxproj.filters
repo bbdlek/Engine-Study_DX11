@@ -27,6 +27,9 @@
     <ClInclude Include="applicationclass.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="d3dclass.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -39,6 +42,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="applicationclass.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="d3dclass.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

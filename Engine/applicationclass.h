@@ -2,7 +2,7 @@
 #define _APPLICATIONCLASS_H_
 
 
-#include <windows.h>
+#include "d3dclass.h"
 
 
 const bool FULL_SCREEN = false;
@@ -26,6 +26,7 @@ private:
 	bool Render();
 
 private:
+	D3DClass* m_Direct3D;
 
 };
 
