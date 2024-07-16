@@ -1,14 +1,14 @@
-cbuffer MatrixBuffer
+ï»¿cbuffer MatrixBuffer
 {
 	matrix worldMatrix;
 	matrix viewMatrix;
 	matrix projectionMatrix;
 };
 
-// ´õÀÌ»ó Á¤Á¡¿¡ »ö»óÀ» »ç¿ëÇÏÁö ¾Ê°í ÅØ½ºÃÄ ÁÂÇ¥¸¦ »ç¿ëÇÏ°Ô µÉ °Í
-// ÅØ½ºÃÄ¿¡¼­´Â U¿Í VÁÂÇ¥¸¸À» »ç¿ëÇÏ±â ¶§¹®¿¡ ÀÌ¸¦ Ç¥ÇöÇÏ±â À§ÇØ float2 ÀÚ·áÇüÀ» ÀÌ¿ë
-// Á¤Á¡ ¼ÎÀÌ´õ¿Í ÇÈ¼¿ ¼ÎÀÌ´õ¿¡¼­ ÅØ½ºÃÄ ÁÂÇ¥¸¦ ³ªÅ¸³»±â À§ÇØ TEXCOORD0ÀÌ¶ó´Â °ÍÀ» »ç¿ë
-// ¿©·¯ °³ÀÇ ÅØ½ºÃÄ ÁÂÇ¥°¡ °¡´ÉÇÏ´Ù¸é ±× °ªÀ» 0ºÎÅÍ ¾Æ¹« ¼ýÀÚ·Î³ª ÁöÁ¤ÇÒ ¼öµµ ÀÖÀ½
+// ë”ì´ìƒ ì •ì ì— ìƒ‰ìƒì„ ì‚¬ìš©í•˜ì§€ ì•Šê³  í…ìŠ¤ì³ ì¢Œí‘œë¥¼ ì‚¬ìš©í•˜ê²Œ ë  ê²ƒ
+// í…ìŠ¤ì³ì—ì„œëŠ” Uì™€ Vì¢Œí‘œë§Œì„ ì‚¬ìš©í•˜ê¸° ë•Œë¬¸ì— ì´ë¥¼ í‘œí˜„í•˜ê¸° ìœ„í•´ float2 ìžë£Œí˜•ì„ ì´ìš©
+// ì •ì  ì…°ì´ë”ì™€ í”½ì…€ ì…°ì´ë”ì—ì„œ í…ìŠ¤ì³ ì¢Œí‘œë¥¼ ë‚˜íƒ€ë‚´ê¸° ìœ„í•´ TEXCOORD0ì´ë¼ëŠ” ê²ƒì„ ì‚¬ìš©
+// ì—¬ëŸ¬ ê°œì˜ í…ìŠ¤ì³ ì¢Œí‘œê°€ ê°€ëŠ¥í•˜ë‹¤ë©´ ê·¸ ê°’ì„ 0ë¶€í„° ì•„ë¬´ ìˆ«ìžë¡œë‚˜ ì§€ì •í•  ìˆ˜ë„ ìžˆìŒ
 struct VertexInputType
 {
     float4 position : POSITION;
@@ -36,7 +36,7 @@ PixelInputType TextureVertexShader(VertexInputType input)
     output.position = mul(input.position, worldMatrix);
     output.position = mul(output.position, viewMatrix);
     output.position = mul(output.position, projectionMatrix);
-    // ¾Õ¼± Æ©Åä¸®¾óÀÇ ÄÃ·¯ Á¤Á¡ ¼ÎÀÌ´õ¿Í ÅØ½ºÃÄ Á¤Á¡ ¼ÎÀÌ´õÀÇ À¯ÀÏÇÑ Â÷ÀÌÁ¡Àº »ö»óÀ» ±×´ë·Î Àü´ÞÇÏ´Â °ÍÀÌ ¾Æ´Ï¶ó ÅØ½ºÃÄÀÇ ÁÂÇ¥µéÀ» º¹»çÇØ¼­ ÇÈ¼¿ ¼ÎÀÌ´õ·Î Àü´ÞÇÑ´Ù´Â °Í
+    // ì•žì„  íŠœí† ë¦¬ì–¼ì˜ ì»¬ëŸ¬ ì •ì  ì…°ì´ë”ì™€ í…ìŠ¤ì³ ì •ì  ì…°ì´ë”ì˜ ìœ ì¼í•œ ì°¨ì´ì ì€ ìƒ‰ìƒì„ ê·¸ëŒ€ë¡œ ì „ë‹¬í•˜ëŠ” ê²ƒì´ ì•„ë‹ˆë¼ í…ìŠ¤ì³ì˜ ì¢Œí‘œë“¤ì„ ë³µì‚¬í•´ì„œ í”½ì…€ ì…°ì´ë”ë¡œ ì „ë‹¬í•œë‹¤ëŠ” ê²ƒ
     
     // Store the texture coordinates for the pixel shader
     output.tex = input.tex;

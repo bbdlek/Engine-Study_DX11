@@ -1,4 +1,4 @@
-#include "SystemClass.h"
+ï»¿#include "SystemClass.h"
 
 SystemClass::SystemClass()
 {
@@ -168,18 +168,18 @@ void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
 	m_applicationName = L"Engine";
 
 	// Setup the windows class with default settings.
-	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC; //ÀÌµ¿ ¶Ç´Â Å©±â Á¶Á¤ÀÌ Å¬¶óÀÌ¾ðÆ® ¿µ¿ªÀÇ ³Êºñ|³ôÀÌ¸¦ º¯°æÇÏ´Â °æ¿ì ÀüÃ¼ Ã¢À» ´Ù½Ã ±×¸² | Å¬·¡½ºÀÇ °¢ Ã¢¿¡ °íÀ¯ÇÑ µð¹ÙÀÌ½º ÄÁÅØ½ºÆ®¸¦ ÇÒ´çÇÔ
-	wc.lpfnWndProc = WndProc; //Ã¢ ÇÁ·Î½ÃÀú ¶Ç´Â Ã¢ ÇÁ·Î½ÃÀú¶ó´Â ¾ÖÇÃ¸®ÄÉÀÌ¼Ç Á¤ÀÇ ÇÔ¼ö¿¡ ´ëÇÑ Æ÷ÀÎÅÍ
-	wc.cbClsExtra = 0; //Ã¢ Å¬·¡½º ±¸Á¶ ´ÙÀ½¿¡ ÇÒ´çÇÒ Ãß°¡ ¹ÙÀÌÆ® ¼ö
+	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC; //ì´ë™ ë˜ëŠ” í¬ê¸° ì¡°ì •ì´ í´ë¼ì´ì–¸íŠ¸ ì˜ì—­ì˜ ë„ˆë¹„|ë†’ì´ë¥¼ ë³€ê²½í•˜ëŠ” ê²½ìš° ì „ì²´ ì°½ì„ ë‹¤ì‹œ ê·¸ë¦¼ | í´ëž˜ìŠ¤ì˜ ê° ì°½ì— ê³ ìœ í•œ ë””ë°”ì´ìŠ¤ ì»¨í…ìŠ¤íŠ¸ë¥¼ í• ë‹¹í•¨
+	wc.lpfnWndProc = WndProc; //ì°½ í”„ë¡œì‹œì € ë˜ëŠ” ì°½ í”„ë¡œì‹œì €ë¼ëŠ” ì• í”Œë¦¬ì¼€ì´ì…˜ ì •ì˜ í•¨ìˆ˜ì— ëŒ€í•œ í¬ì¸í„°
+	wc.cbClsExtra = 0; //ì°½ í´ëž˜ìŠ¤ êµ¬ì¡° ë‹¤ìŒì— í• ë‹¹í•  ì¶”ê°€ ë°”ì´íŠ¸ ìˆ˜
 	wc.cbWndExtra = 0;
-	wc.hInstance = m_hinstance; //Å¬·¡½ºÀÇ Ã¢ ÇÁ·Î½ÃÀú¸¦ Æ÷ÇÔÇÏ´Â instance ´ëÇÑ ÇÚµé
-	wc.hIcon = LoadIcon(NULL, IDI_WINLOGO); //Å¬·¡½º ¾ÆÀÌÄÜ¿¡ ´ëÇÑ ÇÚµé
-	wc.hIconSm = wc.hIcon; //Ã¢ Å¬·¡½º¿Í ¿¬°áµÈ ÀÛÀº ¾ÆÀÌÄÜ¿¡ ´ëÇÑ ÇÚµé
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW); //Å¬·¡½º Ä¿¼­¿¡ ´ëÇÑ ÇÚµé
-	wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH); //Å¬·¡½º ¹è°æ ºê·¯½Ã¿¡ ´ëÇÑ ÇÚµé
-	wc.lpszMenuName = NULL; //ÀÌ¸§ÀÌ ¸®¼Ò½º ÆÄÀÏ¿¡ Ç¥½ÃµÉ ¶§ Å¬·¡½º ¸Þ´ºÀÇ ¸®¼Ò½º ÀÌ¸§À» ÁöÁ¤ÇÏ´Â null·Î ³¡³ª´Â ¹®ÀÚ¿­¿¡ ´ëÇÑ Æ÷ÀÎÅÍ
-	wc.lpszClassName = m_applicationName; //null·Î ³¡³ª´Â ¹®ÀÚ¿­¿¡ ´ëÇÑ Æ÷ÀÎÅÍÀÌ°Å³ª ¿øÀÚ
-	wc.cbSize = sizeof(WNDCLASSEX); //ÀÌ ±¸Á¶Ã¼ÀÇ Å©±â(¹ÙÀÌÆ®)
+	wc.hInstance = m_hinstance; //í´ëž˜ìŠ¤ì˜ ì°½ í”„ë¡œì‹œì €ë¥¼ í¬í•¨í•˜ëŠ” instance ëŒ€í•œ í•¸ë“¤
+	wc.hIcon = LoadIcon(NULL, IDI_WINLOGO); //í´ëž˜ìŠ¤ ì•„ì´ì½˜ì— ëŒ€í•œ í•¸ë“¤
+	wc.hIconSm = wc.hIcon; //ì°½ í´ëž˜ìŠ¤ì™€ ì—°ê²°ëœ ìž‘ì€ ì•„ì´ì½˜ì— ëŒ€í•œ í•¸ë“¤
+	wc.hCursor = LoadCursor(NULL, IDC_ARROW); //í´ëž˜ìŠ¤ ì»¤ì„œì— ëŒ€í•œ í•¸ë“¤
+	wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH); //í´ëž˜ìŠ¤ ë°°ê²½ ë¸ŒëŸ¬ì‹œì— ëŒ€í•œ í•¸ë“¤
+	wc.lpszMenuName = NULL; //ì´ë¦„ì´ ë¦¬ì†ŒìŠ¤ íŒŒì¼ì— í‘œì‹œë  ë•Œ í´ëž˜ìŠ¤ ë©”ë‰´ì˜ ë¦¬ì†ŒìŠ¤ ì´ë¦„ì„ ì§€ì •í•˜ëŠ” nullë¡œ ëë‚˜ëŠ” ë¬¸ìžì—´ì— ëŒ€í•œ í¬ì¸í„°
+	wc.lpszClassName = m_applicationName; //nullë¡œ ëë‚˜ëŠ” ë¬¸ìžì—´ì— ëŒ€í•œ í¬ì¸í„°ì´ê±°ë‚˜ ì›ìž
+	wc.cbSize = sizeof(WNDCLASSEX); //ì´ êµ¬ì¡°ì²´ì˜ í¬ê¸°(ë°”ì´íŠ¸)
 
 	// Register the window class.
 	RegisterClassEx(&wc);

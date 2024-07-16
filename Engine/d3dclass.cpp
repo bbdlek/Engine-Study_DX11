@@ -1,4 +1,4 @@
-#include "d3dclass.h"
+ï»¿#include "d3dclass.h"
 
 D3DClass::D3DClass()
 {
@@ -43,10 +43,10 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	// Store the vsync setting.
 	m_vsync_enabled = vsync;
 
-	// Video Card, Monitor¿¡¼­ »õ·Î °íÄ§ ºóµµ °¡Á®¿À±â
-	// ÄÄÇ»ÅÍ¸¶´Ù ¾à°£¾¿ ´Ù¸¦ ¼ö ÀÖÀ¸¹Ç·Î ÇØ´ç Á¤º¸¸¦ Äõ¸®ÇØ¾ßÇÔ.
-	// ºÐÀÚ ¹× ºÐ¸ð °ªÀ» Äõ¸®ÇÑ ´ÙÀ½ ¼³Á¤ Áß¿¡ DirectX¿¡ Àü´ÞÇÏ¸é ÀûÀýÇÑ »õ·Î °íÄ§ ºóµµ°¡ °è»êµÊ.
-	// ÀÌ ÀÛ¾÷À» ¼öÇàÇÏÁö ¾Ê°í ¸ðµç ÄÄÇ»ÅÍ¿¡ Á¸ÀçÇÏÁö ¾ÊÀ» ¼ö ÀÖ´Â ±âº»°ªÀ¸·Î ¼³Á¤ÇÏ¸é DirectX´Â Buffer Flip ´ë½Å BlitÀ» ¼öÇàÇÏ¿© ÀÀ´äÇÏ¿© ¼º´ÉÀ» ÀúÇÏ½ÃÅ°°í µð¹ö±× Ãâ·Â¿¡ ¼º°¡½Å ¿À·ù¸¦ ¹ß»ý½ÃÅ´
+	// Video Card, Monitorì—ì„œ ìƒˆë¡œ ê³ ì¹¨ ë¹ˆë„ ê°€ì ¸ì˜¤ê¸°
+	// ì»´í“¨í„°ë§ˆë‹¤ ì•½ê°„ì”© ë‹¤ë¥¼ ìˆ˜ ìžˆìœ¼ë¯€ë¡œ í•´ë‹¹ ì •ë³´ë¥¼ ì¿¼ë¦¬í•´ì•¼í•¨.
+	// ë¶„ìž ë° ë¶„ëª¨ ê°’ì„ ì¿¼ë¦¬í•œ ë‹¤ìŒ ì„¤ì • ì¤‘ì— DirectXì— ì „ë‹¬í•˜ë©´ ì ì ˆí•œ ìƒˆë¡œ ê³ ì¹¨ ë¹ˆë„ê°€ ê³„ì‚°ë¨.
+	// ì´ ìž‘ì—…ì„ ìˆ˜í–‰í•˜ì§€ ì•Šê³  ëª¨ë“  ì»´í“¨í„°ì— ì¡´ìž¬í•˜ì§€ ì•Šì„ ìˆ˜ ìžˆëŠ” ê¸°ë³¸ê°’ìœ¼ë¡œ ì„¤ì •í•˜ë©´ DirectXëŠ” Buffer Flip ëŒ€ì‹  Blitì„ ìˆ˜í–‰í•˜ì—¬ ì‘ë‹µí•˜ì—¬ ì„±ëŠ¥ì„ ì €í•˜ì‹œí‚¤ê³  ë””ë²„ê·¸ ì¶œë ¥ì— ì„±ê°€ì‹  ì˜¤ë¥˜ë¥¼ ë°œìƒì‹œí‚´
 	
 	// Create a DirectX graphics interface factory.
 	result = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory);
@@ -98,14 +98,14 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 		{
 			if (displayModeList[i].Height == (unsigned int)screenHeight)
 			{
-				numerator = displayModeList[i].RefreshRate.Numerator; // ºÐÀÚ
-				denominator = displayModeList[i].RefreshRate.Denominator; // ºÐ¸ð
+				numerator = displayModeList[i].RefreshRate.Numerator; // ë¶„ìž
+				denominator = displayModeList[i].RefreshRate.Denominator; // ë¶„ëª¨
 			}
 		}
 	}
 
-	// À§¿¡¼­ »õ·Î °íÄ§ ºóµµ¿¡ ´ëÇÑ ºÐÀÚ, ºÐ¸ð¸¦ ¾òÀ½
-	// Adapter¸¦ »ç¿ëÇÏ¿© ¸¶Áö¸·À¸·Î °Ë»ö ÇÒ °ÍÀº Video CardÀÇ ÀÌ¸§°ú Video MemoryÀÇ ¾ç
+	// ìœ„ì—ì„œ ìƒˆë¡œ ê³ ì¹¨ ë¹ˆë„ì— ëŒ€í•œ ë¶„ìž, ë¶„ëª¨ë¥¼ ì–»ìŒ
+	// Adapterë¥¼ ì‚¬ìš©í•˜ì—¬ ë§ˆì§€ë§‰ìœ¼ë¡œ ê²€ìƒ‰ í•  ê²ƒì€ Video Cardì˜ ì´ë¦„ê³¼ Video Memoryì˜ ì–‘
 	
 	// Get the adapter (video card) description.
 	result = adapter->GetDesc(&adapterDesc);
@@ -124,8 +124,8 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 		return false;
 	}
 
-	// »õ·Î °íÄ§¿Í ºñµð¿À Ä«µå Á¤º¸¿¡ ´ëÇÑ ºÐÀÚ¿Í ºÐ¸ð¸¦ ÀúÀåÇßÀ¸¹Ç·Î ±¸Á¶¸¦ ÇØÃ¼ÇÒ ¼ö ÀÖÀ½
-	// Á¤º¸¸¦ ¾ò´Â µ¥ »ç¿ëµÇ´Â ÀÎÅÍÆäÀÌ½º
+	// ìƒˆë¡œ ê³ ì¹¨ì™€ ë¹„ë””ì˜¤ ì¹´ë“œ ì •ë³´ì— ëŒ€í•œ ë¶„ìžì™€ ë¶„ëª¨ë¥¼ ì €ìž¥í–ˆìœ¼ë¯€ë¡œ êµ¬ì¡°ë¥¼ í•´ì²´í•  ìˆ˜ ìžˆìŒ
+	// ì •ë³´ë¥¼ ì–»ëŠ” ë° ì‚¬ìš©ë˜ëŠ” ì¸í„°íŽ˜ì´ìŠ¤
 
 	// Release the display mode list.
 	delete[] displayModeList;
@@ -143,10 +143,10 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	factory->Release();
 	factory = 0;
 
-	// ÀÌÁ¦ ½Ã½ºÅÛÀÇ »õ·Î °íÄ§ ºóµµ°¡ ÀÖÀ¸¹Ç·Î DirectX¸¦ ÃÊ±âÈ­ ÇÒ ¼ö ÀÖÀ½
-	// °¡Àå ¸ÕÀú ÇÒ ÀÏÀº '½º¿Ò Ã¼ÀÎ'ÀÇ DescriptionÀ» ÀÛ¼ºÇÏ´Â °Í
-	// '½º¿Ò Ã¼ÀÎ'Àº ±×·¡ÇÈÀ¸ ±×·ÁÁö´Â ¾Õ µÚ ¹öÆÛ
-	// ÀÏ¹ÝÀûÀ¸·Î ´ÜÀÏ ¹é ¹öÆÛ¸¦ »ç¿ëÇÏ°í ¸ðµç ±×¸®±â¸¦ ¼öÇàÇÑ ´ÙÀ½ »ç¿ëÀÚÀÇ È­¸é¿¡ Ç¥½ÃµÇ´Â Àü¸é ¹öÆÛ·Î ¹Ù²Þ
+	// ì´ì œ ì‹œìŠ¤í…œì˜ ìƒˆë¡œ ê³ ì¹¨ ë¹ˆë„ê°€ ìžˆìœ¼ë¯€ë¡œ DirectXë¥¼ ì´ˆê¸°í™” í•  ìˆ˜ ìžˆìŒ
+	// ê°€ìž¥ ë¨¼ì € í•  ì¼ì€ 'ìŠ¤ì™‘ ì²´ì¸'ì˜ Descriptionì„ ìž‘ì„±í•˜ëŠ” ê²ƒ
+	// 'ìŠ¤ì™‘ ì²´ì¸'ì€ ê·¸ëž˜í”½ìœ¼ ê·¸ë ¤ì§€ëŠ” ì•ž ë’¤ ë²„í¼
+	// ì¼ë°˜ì ìœ¼ë¡œ ë‹¨ì¼ ë°± ë²„í¼ë¥¼ ì‚¬ìš©í•˜ê³  ëª¨ë“  ê·¸ë¦¬ê¸°ë¥¼ ìˆ˜í–‰í•œ ë‹¤ìŒ ì‚¬ìš©ìžì˜ í™”ë©´ì— í‘œì‹œë˜ëŠ” ì „ë©´ ë²„í¼ë¡œ ë°”ê¿ˆ
 
 	// Initialize the swap chain description.
 	ZeroMemory(&swapChainDesc, sizeof(swapChainDesc));
@@ -161,10 +161,10 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	// Set regular 32-bit surface for the back buffer.
 	swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 
-	// ½º¿Ò Ã¼ÀÎ Description Áß »õ·Î °íÄ§ ºóµµ ºÎºÐ
-	// »õ·Î °íÄ§ ºóµµ´Â ÃÊ´ç ¹é ¹öÆÛ¸¦ Àü¸é ¹öÆÛ·Î ±×¸®´Â ÇÔ¼ö
-	// applicationclass.h ¿¡¼­ vsync°¡ true·Î ¼³Á¤µÈ °æ¿ì ½Ã½ºÅÛ ¼³Á¤À¸·Î Àá±è
-	// falseÀÎ °æ¿ì ÃÊ´ç °¡´ÉÇÑ ÇÑ ¸¹ÀÌ È­¸éÀ» ±×¸®Áö¸¸ ÀÌ·Î ÀÎÇØ ÀÏºÎ ½Ã°¢Àû ¾ÆÆ¼ÆÑÆ®°¡ ¹ß»ýÇÒ ¼ö ÀÖÀ½
+	// ìŠ¤ì™‘ ì²´ì¸ Description ì¤‘ ìƒˆë¡œ ê³ ì¹¨ ë¹ˆë„ ë¶€ë¶„
+	// ìƒˆë¡œ ê³ ì¹¨ ë¹ˆë„ëŠ” ì´ˆë‹¹ ë°± ë²„í¼ë¥¼ ì „ë©´ ë²„í¼ë¡œ ê·¸ë¦¬ëŠ” í•¨ìˆ˜
+	// applicationclass.h ì—ì„œ vsyncê°€ trueë¡œ ì„¤ì •ëœ ê²½ìš° ì‹œìŠ¤í…œ ì„¤ì •ìœ¼ë¡œ ìž ê¹€
+	// falseì¸ ê²½ìš° ì´ˆë‹¹ ê°€ëŠ¥í•œ í•œ ë§Žì´ í™”ë©´ì„ ê·¸ë¦¬ì§€ë§Œ ì´ë¡œ ì¸í•´ ì¼ë¶€ ì‹œê°ì  ì•„í‹°íŒ©íŠ¸ê°€ ë°œìƒí•  ìˆ˜ ìžˆìŒ
 
 	// Set the refresh rate of the back buffer.
 	if (m_vsync_enabled)
@@ -208,19 +208,19 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	// Don't set the advanced flags.
 	swapChainDesc.Flags = 0;
 
-	// ½º¿Ò Ã¼ÀÎ DescriptionÀ» ¼³Á¤ÇÑ ÈÄ feature LevelÀÌ¶ó´Â º¯¼ö¸¦ ÇÏ³ª ´õ ¼³Á¤ÇØ¾ß ÇÔ.
-	// ÀÌ º¯¼ö´Â DirectX¿¡ »ç¿ëÇÒ ¹öÀüÀ» ¾Ë·ÁÁÜ.
+	// ìŠ¤ì™‘ ì²´ì¸ Descriptionì„ ì„¤ì •í•œ í›„ feature Levelì´ë¼ëŠ” ë³€ìˆ˜ë¥¼ í•˜ë‚˜ ë” ì„¤ì •í•´ì•¼ í•¨.
+	// ì´ ë³€ìˆ˜ëŠ” DirectXì— ì‚¬ìš©í•  ë²„ì „ì„ ì•Œë ¤ì¤Œ.
 
 	// Set the feature level to DirectX 11.
 	featureLevel = D3D_FEATURE_LEVEL_11_0;
 
-	// ÀÌÁ¦ ½º¿Ò Ã¼ÀÎ Description ¹× feature levelÀÌ Ã¤¿öÁ³À¸¹Ç·Î ½º¿Ò Ã¼ÀÎ, Direct3D ÀåÄ¡ ¹× Direct3D ÀåÄ¡ ÄÁÅØ½ºÆ®¸¦ ¸¸µé ¼ö ÀÖÀ½.
-	// Direct3D ÀåÄ¡ ¹× Direct3D ÀåÄ¡ ÄÁÅØ½ºÆ®´Â ¸Å¿ì Áß¿äÇÏ¸ç ¸ðµç Direct3D ±â´É¿¡ ´ëÇÑ ÀÎÅÍÆäÀÌ½ºÀÔ´Ï´Ù. ÀÌ ½ÃÁ¡ºÎÅÍ °ÅÀÇ ¸ðµç ÀÛ¾÷¿¡ ÀåÄ¡ ¹× ÀåÄ¡ ÄÁÅØ½ºÆ®¸¦ »ç¿ëÇÔ.
+	// ì´ì œ ìŠ¤ì™‘ ì²´ì¸ Description ë° feature levelì´ ì±„ì›Œì¡Œìœ¼ë¯€ë¡œ ìŠ¤ì™‘ ì²´ì¸, Direct3D ìž¥ì¹˜ ë° Direct3D ìž¥ì¹˜ ì»¨í…ìŠ¤íŠ¸ë¥¼ ë§Œë“¤ ìˆ˜ ìžˆìŒ.
+	// Direct3D ìž¥ì¹˜ ë° Direct3D ìž¥ì¹˜ ì»¨í…ìŠ¤íŠ¸ëŠ” ë§¤ìš° ì¤‘ìš”í•˜ë©° ëª¨ë“  Direct3D ê¸°ëŠ¥ì— ëŒ€í•œ ì¸í„°íŽ˜ì´ìŠ¤ìž…ë‹ˆë‹¤. ì´ ì‹œì ë¶€í„° ê±°ì˜ ëª¨ë“  ìž‘ì—…ì— ìž¥ì¹˜ ë° ìž¥ì¹˜ ì»¨í…ìŠ¤íŠ¸ë¥¼ ì‚¬ìš©í•¨.
 	
-	// »ç¿ëÀÚ¿¡°Ô DirectX 11 ºñµð¿À Ä«µå°¡ ¾ø´Â °æ¿ì ÀÌ ÇÔ¼ö È£ÃâÀº µð¹ÙÀÌ½º ¹× µð¹ÙÀÌ½º ÄÁÅØ½ºÆ®¸¦ ¸¸µéÁö ¸øÇÔ
-	// ¶ÇÇÑ DirectX 11 ±â´ÉÀ» Á÷Á¢ Å×½ºÆ®ÇÏ°í DirectX 11 ºñµð¿À Ä«µå°¡¾ø´Â °æ¿ì ±³Ã¼ ÇÒ ¼ö ÀÖÀ½
-	// D3D_DRIVER_TYPE_REFERENCE ¹× DirectX¸¦ »ç¿ëÇÏ´Â D3D_DRIVER_TYPE_HARDWARE´Â ºñµð¿À Ä«µå ÇÏµå¿þ¾î ´ë½Å CPU¸¦ »ç¿ëÇÏ¿© ±×¸²À» ±×¸²
-	// ÀÌ°ÍÀº 1/1000 ¼Óµµ·Î ½ÇÇàµÇÁö¸¸ ¾ÆÁ÷ ¸ðµç ÄÄÇ»ÅÍ¿¡ DirectX 11 ºñµð¿À Ä«µå°¡ ¾ø´Â »ç¶÷µé¿¡°Ô ÁÁÀ½
+	// ì‚¬ìš©ìžì—ê²Œ DirectX 11 ë¹„ë””ì˜¤ ì¹´ë“œê°€ ì—†ëŠ” ê²½ìš° ì´ í•¨ìˆ˜ í˜¸ì¶œì€ ë””ë°”ì´ìŠ¤ ë° ë””ë°”ì´ìŠ¤ ì»¨í…ìŠ¤íŠ¸ë¥¼ ë§Œë“¤ì§€ ëª»í•¨
+	// ë˜í•œ DirectX 11 ê¸°ëŠ¥ì„ ì§ì ‘ í…ŒìŠ¤íŠ¸í•˜ê³  DirectX 11 ë¹„ë””ì˜¤ ì¹´ë“œê°€ì—†ëŠ” ê²½ìš° êµì²´ í•  ìˆ˜ ìžˆìŒ
+	// D3D_DRIVER_TYPE_REFERENCE ë° DirectXë¥¼ ì‚¬ìš©í•˜ëŠ” D3D_DRIVER_TYPE_HARDWAREëŠ” ë¹„ë””ì˜¤ ì¹´ë“œ í•˜ë“œì›¨ì–´ ëŒ€ì‹  CPUë¥¼ ì‚¬ìš©í•˜ì—¬ ê·¸ë¦¼ì„ ê·¸ë¦¼
+	// ì´ê²ƒì€ 1/1000 ì†ë„ë¡œ ì‹¤í–‰ë˜ì§€ë§Œ ì•„ì§ ëª¨ë“  ì»´í“¨í„°ì— DirectX 11 ë¹„ë””ì˜¤ ì¹´ë“œê°€ ì—†ëŠ” ì‚¬ëžŒë“¤ì—ê²Œ ì¢‹ìŒ
 
 	// Create the swap chain, Direct3D device, and Direct3D device context.
 	result = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, &featureLevel, 1,
@@ -230,12 +230,12 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 		return false;
 	}
 
-	// ±âº» ºñµð¿À Ä«µå°¡ DirectX 11°ú È£È¯µÇÁö ¾Ê´Â °æ¿ì µð¹ÙÀÌ½º¸¦ ¸¸µé±â À§ÇÑ ÀÌ È£ÃâÀÌ ½ÇÆÐÇÏ´Â °æ¿ì°¡ ÀÖÀ½
-	// ÀÏºÎ ÄÄÇ»ÅÍ¿¡´Â ±âº» Ä«µå°¡ DirectX 10 ºñµð¿À Ä«µåÀÌ°í º¸Á¶ Ä«µå°¡ DirectX 11 ºñµð¿À Ä«µåÀÏ ¼ö ÀÖ½À´Ï´Ù. ¶ÇÇÑ ÀÏºÎ ÇÏÀÌºê¸®µå ±×·¡ÇÈ Ä«µå´Â ±âº» ±×·¡ÇÈ Ä«µå¿Í º¸Á¶ ±×·¡ÇÈ Ä«µå¿Í ÇÔ²² ÀÛµ¿ÇÕ´Ï´Ù
-	// ÀÌ ¹®Á¦¸¦ ÇØ°áÇÏ·Á¸é ±âº» ÀåÄ¡¸¦ »ç¿ëÇÏÁö ¸»°í ´ë½Å ÄÄÇ»ÅÍÀÇ ¸ðµç ºñµð¿À Ä«µå¸¦ ¿­°ÅÇÏ°í »ç¿ëÀÚ°¡ »ç¿ëÇÒ ºñµð¿À Ä«µå¸¦ ¼±ÅÃÇÑ ´ÙÀ½ ÀåÄ¡¸¦ ¸¸µé ¶§ ÇØ´ç Ä«µå¸¦ ÁöÁ¤ÇÏµµ·Ï ÇÕ´Ï´Ù.
+	// ê¸°ë³¸ ë¹„ë””ì˜¤ ì¹´ë“œê°€ DirectX 11ê³¼ í˜¸í™˜ë˜ì§€ ì•ŠëŠ” ê²½ìš° ë””ë°”ì´ìŠ¤ë¥¼ ë§Œë“¤ê¸° ìœ„í•œ ì´ í˜¸ì¶œì´ ì‹¤íŒ¨í•˜ëŠ” ê²½ìš°ê°€ ìžˆìŒ
+	// ì¼ë¶€ ì»´í“¨í„°ì—ëŠ” ê¸°ë³¸ ì¹´ë“œê°€ DirectX 10 ë¹„ë””ì˜¤ ì¹´ë“œì´ê³  ë³´ì¡° ì¹´ë“œê°€ DirectX 11 ë¹„ë””ì˜¤ ì¹´ë“œì¼ ìˆ˜ ìžˆìŠµë‹ˆë‹¤. ë˜í•œ ì¼ë¶€ í•˜ì´ë¸Œë¦¬ë“œ ê·¸ëž˜í”½ ì¹´ë“œëŠ” ê¸°ë³¸ ê·¸ëž˜í”½ ì¹´ë“œì™€ ë³´ì¡° ê·¸ëž˜í”½ ì¹´ë“œì™€ í•¨ê»˜ ìž‘ë™í•©ë‹ˆë‹¤
+	// ì´ ë¬¸ì œë¥¼ í•´ê²°í•˜ë ¤ë©´ ê¸°ë³¸ ìž¥ì¹˜ë¥¼ ì‚¬ìš©í•˜ì§€ ë§ê³  ëŒ€ì‹  ì»´í“¨í„°ì˜ ëª¨ë“  ë¹„ë””ì˜¤ ì¹´ë“œë¥¼ ì—´ê±°í•˜ê³  ì‚¬ìš©ìžê°€ ì‚¬ìš©í•  ë¹„ë””ì˜¤ ì¹´ë“œë¥¼ ì„ íƒí•œ ë‹¤ìŒ ìž¥ì¹˜ë¥¼ ë§Œë“¤ ë•Œ í•´ë‹¹ ì¹´ë“œë¥¼ ì§€ì •í•˜ë„ë¡ í•©ë‹ˆë‹¤.
 
-	// ÀÌÁ¦ ½º¿Ò Ã¼ÀÎÀÌ ÀÖÀ¸¹Ç·Î ¹é ¹öÆÛ¿¡ ´ëÇÑ Æ÷ÀÎÅÍ¸¦ °¡Á®¿Â ´ÙÀ½ ½º¿Ò Ã¼ÀÎ¿¡ ¿¬°áÇØ¾ß ÇÕ´Ï´Ù.
-	// CreateRenderTargetView ÇÔ¼ö¸¦ »ç¿ëÇÏ¿© ¹é ¹öÆÛ¸¦ ½º¿Ò Ã¼ÀÎ¿¡ ¿¬°áÇÔ
+	// ì´ì œ ìŠ¤ì™‘ ì²´ì¸ì´ ìžˆìœ¼ë¯€ë¡œ ë°± ë²„í¼ì— ëŒ€í•œ í¬ì¸í„°ë¥¼ ê°€ì ¸ì˜¨ ë‹¤ìŒ ìŠ¤ì™‘ ì²´ì¸ì— ì—°ê²°í•´ì•¼ í•©ë‹ˆë‹¤.
+	// CreateRenderTargetView í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•˜ì—¬ ë°± ë²„í¼ë¥¼ ìŠ¤ì™‘ ì²´ì¸ì— ì—°ê²°í•¨
 
 	// Get the pointer to the back buffer.
 	result = m_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&backBufferPtr);
@@ -255,10 +255,10 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	backBufferPtr->Release();
 	backBufferPtr = 0;
 
-	// Depth Buffer Description ¼³Á¤
-	// ÀÌ¸¦ »ç¿ëÇÏ¿© ´Ù°¢ÇüÀÌ 3D °ø°£¿¡¼­ Á¦´ë·Î ·»´õ¸µµÉ ¼ö ÀÖµµ·Ï ±íÀÌ ¹öÆÛ¸¦ ¸¸µë
-	// µ¿½Ã¿¡ Stencil Buffer¸¦ Depth Buffer¿¡ ¿¬°á
-	// Stencil Buffer´Â ¸ð¼Ç ºí·¯, volumetric shadows¿Í °°Àº È¿°ú¸¦ ¾ò´Â µ¥ »ç¿ëÇÒ ¼ö ÀÖÀ½
+	// Depth Buffer Description ì„¤ì •
+	// ì´ë¥¼ ì‚¬ìš©í•˜ì—¬ ë‹¤ê°í˜•ì´ 3D ê³µê°„ì—ì„œ ì œëŒ€ë¡œ ë Œë”ë§ë  ìˆ˜ ìžˆë„ë¡ ê¹Šì´ ë²„í¼ë¥¼ ë§Œë“¬
+	// ë™ì‹œì— Stencil Bufferë¥¼ Depth Bufferì— ì—°ê²°
+	// Stencil BufferëŠ” ëª¨ì…˜ ë¸”ëŸ¬, volumetric shadowsì™€ ê°™ì€ íš¨ê³¼ë¥¼ ì–»ëŠ” ë° ì‚¬ìš©í•  ìˆ˜ ìžˆìŒ
 
 	// Initialize the description of the depth buffer.
 	ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
@@ -276,10 +276,10 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	depthBufferDesc.CPUAccessFlags = 0;
 	depthBufferDesc.MiscFlags = 0;
 
-	// ÀÌÁ¦ ÇØ´ç DescriptionÀ» »ç¿ëÇÏ¿© Depth, Stencil Buffer¸¦ ¸¸µê
-	// CreateTexture2D ÇÔ¼ö¸¦ »ç¿ëÇÏ¿© Buffer¸¦ ¸¸µå´Â °ÍÀ» º¼ ¼ö ÀÖÀ¸¹Ç·Î, Buffer´Â ±×³É 2D TextureÀÔ´Ï´Ù.
-	// ±× ÀÌÀ¯´Â Æú¸®°ïÀÌ Á¤·ÄµÈ ´ÙÀ½ ·¡½ºÅÍÈ­µÇ¸é ÀÌ 2D ¹öÆÛ¿¡¼­ ÄÃ·¯ ÇÈ¼¿ÀÌ µÇ±â ¶§¹®ÀÓ.
-	// ±×·± ´ÙÀ½ ÀÌ 2D Buffer°¡ È­¸é¿¡ ±×·ÁÁü
+	// ì´ì œ í•´ë‹¹ Descriptionì„ ì‚¬ìš©í•˜ì—¬ Depth, Stencil Bufferë¥¼ ë§Œë“¦
+	// CreateTexture2D í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•˜ì—¬ Bufferë¥¼ ë§Œë“œëŠ” ê²ƒì„ ë³¼ ìˆ˜ ìžˆìœ¼ë¯€ë¡œ, BufferëŠ” ê·¸ëƒ¥ 2D Textureìž…ë‹ˆë‹¤.
+	// ê·¸ ì´ìœ ëŠ” í´ë¦¬ê³¤ì´ ì •ë ¬ëœ ë‹¤ìŒ ëž˜ìŠ¤í„°í™”ë˜ë©´ ì´ 2D ë²„í¼ì—ì„œ ì»¬ëŸ¬ í”½ì…€ì´ ë˜ê¸° ë•Œë¬¸ìž„.
+	// ê·¸ëŸ° ë‹¤ìŒ ì´ 2D Bufferê°€ í™”ë©´ì— ê·¸ë ¤ì§
 
 	// Create the texture for the depth buffer using the filled out description.
 	result = m_device->CreateTexture2D(&depthBufferDesc, NULL, &m_depthStencilBuffer);
@@ -288,8 +288,8 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 		return false;
 	}
 
-	// Stencil Desciption ¼³Á¤
-	// ÀÌ¸¦ ÅëÇØ Direct3D°¡ °¢ ÇÈ¼¿¿¡ ´ëÇØ ¼öÇàÇÒ ±íÀÌ Å×½ºÆ® À¯ÇüÀ» Á¦¾îÇÒ ¼ö ÀÖÀ½
+	// Stencil Desciption ì„¤ì •
+	// ì´ë¥¼ í†µí•´ Direct3Dê°€ ê° í”½ì…€ì— ëŒ€í•´ ìˆ˜í–‰í•  ê¹Šì´ í…ŒìŠ¤íŠ¸ ìœ í˜•ì„ ì œì–´í•  ìˆ˜ ìžˆìŒ
 
 	// Initialize the description of the stencil state.
 	ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
@@ -315,7 +315,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	depthStencilDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 
-	// DescriptionÀÌ ÀÛ¼ºµÇ°í ÀÌÁ¦ depth stencil state¸¦ ¸¸µé ¼ö ÀÖÀ½
+	// Descriptionì´ ìž‘ì„±ë˜ê³  ì´ì œ depth stencil stateë¥¼ ë§Œë“¤ ìˆ˜ ìžˆìŒ
 
 	// Create the depth stencil state.
 	result = m_device->CreateDepthStencilState(&depthStencilDesc, &m_depthStencilState);
@@ -324,15 +324,15 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 		return false;
 	}
 
-	// »ý¼ºµÈ Depth Stencil State¸¦ »ç¿ëÇÏ¿© ÀÌÁ¦ Àû¿ëµÇµµ·Ï ¼³Á¤ÇÒ ¼ö ÀÖÀ½.
-	// ÀåÄ¡ ÄÁÅØ½ºÆ®¸¦ »ç¿ëÇÏ¿© ¼³Á¤
+	// ìƒì„±ëœ Depth Stencil Stateë¥¼ ì‚¬ìš©í•˜ì—¬ ì´ì œ ì ìš©ë˜ë„ë¡ ì„¤ì •í•  ìˆ˜ ìžˆìŒ.
+	// ìž¥ì¹˜ ì»¨í…ìŠ¤íŠ¸ë¥¼ ì‚¬ìš©í•˜ì—¬ ì„¤ì •
 
 	// Set the depth stencil state.
 	m_deviceContext->OMSetDepthStencilState(m_depthStencilState, 1);
 
-	// ´ÙÀ½À¸·Î ¸¸µé¾î¾ß ÇÒ °ÍÀº Depth Stencil Buffer View¿¡ ´ëÇÑ Description
-	// Direct3D°¡ Depth Buffer¸¦ Depth Stencil Texture·Î »ç¿ëÇÏ´Â °ÍÀ» ¾Ë ¼ö ÀÖµµ·Ï ÀÌ ÀÛ¾÷ ¼öÇà
-	// DescriptionÀ» ÀÛ¼ºÇÑ ÈÄ CreateDepthStencilView ÇÔ¼ö¸¦ È£ÃâÇÏ¿© ¸¸µê
+	// ë‹¤ìŒìœ¼ë¡œ ë§Œë“¤ì–´ì•¼ í•  ê²ƒì€ Depth Stencil Buffer Viewì— ëŒ€í•œ Description
+	// Direct3Dê°€ Depth Bufferë¥¼ Depth Stencil Textureë¡œ ì‚¬ìš©í•˜ëŠ” ê²ƒì„ ì•Œ ìˆ˜ ìžˆë„ë¡ ì´ ìž‘ì—… ìˆ˜í–‰
+	// Descriptionì„ ìž‘ì„±í•œ í›„ CreateDepthStencilView í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ì—¬ ë§Œë“¦
 
 	// Initialize the depth stencil view.
 	ZeroMemory(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
@@ -349,19 +349,19 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 		return false;
 	}
 
-	// ÀÌÁ¦ OMSetRenderTargets¸¦ È£ÃâÇÒ ¼ö ÀÖÀ½
-	// ±×·¯¸é ·»´õ ´ë»ó ºä¿Í ±íÀÌ ½ºÅÙ½Ç ¹öÆÛ°¡ Ãâ·Â ·»´õ ÆÄÀÌÇÁ¶óÀÎ¿¡ ¹ÙÀÎµù µÊ
-	// ÀÌ·¸°Ô ÇÏ¸é ÆÄÀÌÇÁ¶óÀÎÀÌ ·»´õ¸µÇÏ´Â ±×·¡ÇÈÀÌ ÀÌÀü¿¡ ¸¸µç ¹é ¹öÆÛ¿¡ ±×·ÁÁü
-	// ÈÄ¸é ¹öÆÛ¿¡ ±×·¡ÇÈÀÌ ±â·ÏµÇ¸é ÀÌ¸¦ Àü¸éÀ¸·Î ±³Ã¼ÇÏ°í »ç¿ëÀÚ È­¸é¿¡ ±×·¡ÇÈÀ» Ç¥½ÃÇÒ ¼ö ÀÖÀ½
+	// ì´ì œ OMSetRenderTargetsë¥¼ í˜¸ì¶œí•  ìˆ˜ ìžˆìŒ
+	// ê·¸ëŸ¬ë©´ ë Œë” ëŒ€ìƒ ë·°ì™€ ê¹Šì´ ìŠ¤í…ì‹¤ ë²„í¼ê°€ ì¶œë ¥ ë Œë” íŒŒì´í”„ë¼ì¸ì— ë°”ì¸ë”© ë¨
+	// ì´ë ‡ê²Œ í•˜ë©´ íŒŒì´í”„ë¼ì¸ì´ ë Œë”ë§í•˜ëŠ” ê·¸ëž˜í”½ì´ ì´ì „ì— ë§Œë“  ë°± ë²„í¼ì— ê·¸ë ¤ì§
+	// í›„ë©´ ë²„í¼ì— ê·¸ëž˜í”½ì´ ê¸°ë¡ë˜ë©´ ì´ë¥¼ ì „ë©´ìœ¼ë¡œ êµì²´í•˜ê³  ì‚¬ìš©ìž í™”ë©´ì— ê·¸ëž˜í”½ì„ í‘œì‹œí•  ìˆ˜ ìžˆìŒ
 
 	// Bind the render target view and depth stencil buffer to the output render pipeline.
 	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
 
-	// ÀÌÁ¦ ·»´õ Å¸°ÙÀÌ ¼³Á¤µÇ¾úÀ¸¹Ç·Î ÇâÈÄ Æ©Åä¸®¾ó¿¡¼­ Àå¸éÀ» ´õ Àß Á¦¾îÇÒ ¼ö ÀÖ´Â ¸î °¡Áö Ãß°¡ ±â´ÉÀ» °è¼ÓÇÒ ¼ö ÀÖÀ½.
-	// ¸ÕÀú ¿ì¸®°¡ ¸¸µé °ÍÀº ·¡½ºÅÍ¶óÀÌÀú »óÅÂÀÔ´Ï´Ù.
-	// ÀÌ¸¦ ÅëÇØ ´Ù°¢ÇüÀÌ ·»´õ¸µµÇ´Â ¹æ½ÄÀ» Á¦¾îÇÒ ¼ö ÀÖÀ½.
-	// Àå¸éÀ» ¿ÍÀÌ¾îÇÁ·¹ÀÓ ¸ðµå·Î ·»´õ¸µÇÏ°Å³ª DirectX°¡ ´Ù°¢ÇüÀÇ ¾Õ¸é°ú µÞ¸éÀ» ¸ðµÎ ±×¸®µµ·Ï ÇÏ´Â µîÀÇ ÀÛ¾÷À» ¼öÇàÇÒ ¼ö ÀÖÀ½.
-	// ±âº»ÀûÀ¸·Î DirectX¿¡´Â ÀÌ¹Ì ·¡½ºÅÍ¶óÀÌÀú »óÅÂ°¡ ¼³Á¤µÇ¾î ÀÖ°í ¾Æ·¡ »óÅÂ¿Í Á¤È®È÷ µ¿ÀÏÇÏ°Ô ÀÛµ¿ÇÏÁö¸¸ Á÷Á¢ ¼³Á¤ÇÏÁö ¾Ê´Â ÇÑ ÀÌ¸¦ º¯°æÇÒ ¼ö ¾øÀ½.
+	// ì´ì œ ë Œë” íƒ€ê²Ÿì´ ì„¤ì •ë˜ì—ˆìœ¼ë¯€ë¡œ í–¥í›„ íŠœí† ë¦¬ì–¼ì—ì„œ ìž¥ë©´ì„ ë” ìž˜ ì œì–´í•  ìˆ˜ ìžˆëŠ” ëª‡ ê°€ì§€ ì¶”ê°€ ê¸°ëŠ¥ì„ ê³„ì†í•  ìˆ˜ ìžˆìŒ.
+	// ë¨¼ì € ìš°ë¦¬ê°€ ë§Œë“¤ ê²ƒì€ ëž˜ìŠ¤í„°ë¼ì´ì € ìƒíƒœìž…ë‹ˆë‹¤.
+	// ì´ë¥¼ í†µí•´ ë‹¤ê°í˜•ì´ ë Œë”ë§ë˜ëŠ” ë°©ì‹ì„ ì œì–´í•  ìˆ˜ ìžˆìŒ.
+	// ìž¥ë©´ì„ ì™€ì´ì–´í”„ë ˆìž„ ëª¨ë“œë¡œ ë Œë”ë§í•˜ê±°ë‚˜ DirectXê°€ ë‹¤ê°í˜•ì˜ ì•žë©´ê³¼ ë’·ë©´ì„ ëª¨ë‘ ê·¸ë¦¬ë„ë¡ í•˜ëŠ” ë“±ì˜ ìž‘ì—…ì„ ìˆ˜í–‰í•  ìˆ˜ ìžˆìŒ.
+	// ê¸°ë³¸ì ìœ¼ë¡œ DirectXì—ëŠ” ì´ë¯¸ ëž˜ìŠ¤í„°ë¼ì´ì € ìƒíƒœê°€ ì„¤ì •ë˜ì–´ ìžˆê³  ì•„ëž˜ ìƒíƒœì™€ ì •í™•ížˆ ë™ì¼í•˜ê²Œ ìž‘ë™í•˜ì§€ë§Œ ì§ì ‘ ì„¤ì •í•˜ì§€ ì•ŠëŠ” í•œ ì´ë¥¼ ë³€ê²½í•  ìˆ˜ ì—†ìŒ.
 
 	// Setup the raster description which will determine how and what polygons will be drawn.
 	rasterDesc.AntialiasedLineEnable = false;
@@ -385,8 +385,8 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	// Now set the rasterizer state.
 	m_deviceContext->RSSetState(m_rasterState);
 
-	// ¶ÇÇÑ Direct3D°¡ Å¬¸³ °ø°£ ÁÂÇ¥¸¦ ·»´õ¸µ ´ë»ó °ø°£¿¡ ¸ÅÇÎÇÒ ¼ö ÀÖµµ·Ï ºäÆ÷Æ®¸¦ ¼³Á¤ÇØ¾ß ÇÔ.
-	// ÀÌ °ªÀ» Ã¢ÀÇ ÀüÃ¼ Å©±â·Î ¼³Á¤
+	// ë˜í•œ Direct3Dê°€ í´ë¦½ ê³µê°„ ì¢Œí‘œë¥¼ ë Œë”ë§ ëŒ€ìƒ ê³µê°„ì— ë§¤í•‘í•  ìˆ˜ ìžˆë„ë¡ ë·°í¬íŠ¸ë¥¼ ì„¤ì •í•´ì•¼ í•¨.
+	// ì´ ê°’ì„ ì°½ì˜ ì „ì²´ í¬ê¸°ë¡œ ì„¤ì •
 
 	// Setup the viewport for rendering.
 	m_viewport.Width = (float)screenWidth;
@@ -399,9 +399,9 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	// Create the viewport.
 	m_deviceContext->RSSetViewports(1, &m_viewport);
 
-	// ÀÌÁ¦ Åõ¿µ ¸ÅÆ®¸¯½º »ý¼º
-	// Åõ¿µ ¸ÅÆ®¸¯½º´Â 3D Àå¸éÀ» ÀÌÀü¿¡ ¸¸µç 2D ºäÆ÷Æ® °ø°£À¸·Î º¯È¯ÇÏ´Â µ¥ »ç¿ëµÊ.
-	// ÀÌ MatrixÀÇ º¹»çº»À» º¸°üÇÏ¿© Àå¸éÀ» ·»´õ¸µÇÏ´Â µ¥ »ç¿ëÇÒ ¼ÎÀÌ´õ¿¡ Àü´ÞÇÒ ¼ö ÀÖµµ·Ï ÇØ¾ßÇÔ
+	// ì´ì œ íˆ¬ì˜ ë§¤íŠ¸ë¦­ìŠ¤ ìƒì„±
+	// íˆ¬ì˜ ë§¤íŠ¸ë¦­ìŠ¤ëŠ” 3D ìž¥ë©´ì„ ì´ì „ì— ë§Œë“  2D ë·°í¬íŠ¸ ê³µê°„ìœ¼ë¡œ ë³€í™˜í•˜ëŠ” ë° ì‚¬ìš©ë¨.
+	// ì´ Matrixì˜ ë³µì‚¬ë³¸ì„ ë³´ê´€í•˜ì—¬ ìž¥ë©´ì„ ë Œë”ë§í•˜ëŠ” ë° ì‚¬ìš©í•  ì…°ì´ë”ì— ì „ë‹¬í•  ìˆ˜ ìžˆë„ë¡ í•´ì•¼í•¨
 
 	// Setup the projection matrix.
 	fieldOfView = 3.141592654f / 4.0f;
@@ -410,23 +410,23 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	// Create the projection matrix for 3D rendering.
 	m_projectionMatrix = XMMatrixPerspectiveFovLH(fieldOfView, screenAspect, screenNear, screenDepth);
 
-	// ¶ÇÇÑ World Matrix¶ó´Â ¶Ç ´Ù¸¥ Matrix¸¦ ¸¸µé °ÍÀÔ´Ï´Ù.
-	// ÀÌ Matrix´Â ¹°Ã¼ÀÇ Á¤Á¡À» 3D Àå¸éÀÇ Á¤Á¡À¸·Î º¯È¯ÇÏ´Â µ¥ »ç¿ëµÊ
-	// ÀÌ Çà·ÄÀº 3D °ø°£¿¡¼­ °³Ã¼¸¦ È¸Àü, º¯È¯ ¹× Å©±â¸¦ Á¶Á¤ÇÏ´Â µ¥¿¡µµ »ç¿ëµÊ.
-	// Ã³À½ºÎÅÍ Çà·ÄÀ» ´ÜÀ§ Çà·Ä·Î ÃÊ±âÈ­ÇÏ°í ÀÌ °³Ã¼¿¡ º¹»çº»À» º¸°üÇÔ
-	// ·»´õ¸µÀ» À§ÇØ ¼ÎÀÌ´õ¿¡ º¹»çº»À» Àü´ÞÇØ¾ß ÇÔ
+	// ë˜í•œ World Matrixë¼ëŠ” ë˜ ë‹¤ë¥¸ Matrixë¥¼ ë§Œë“¤ ê²ƒìž…ë‹ˆë‹¤.
+	// ì´ MatrixëŠ” ë¬¼ì²´ì˜ ì •ì ì„ 3D ìž¥ë©´ì˜ ì •ì ìœ¼ë¡œ ë³€í™˜í•˜ëŠ” ë° ì‚¬ìš©ë¨
+	// ì´ í–‰ë ¬ì€ 3D ê³µê°„ì—ì„œ ê°œì²´ë¥¼ íšŒì „, ë³€í™˜ ë° í¬ê¸°ë¥¼ ì¡°ì •í•˜ëŠ” ë°ì—ë„ ì‚¬ìš©ë¨.
+	// ì²˜ìŒë¶€í„° í–‰ë ¬ì„ ë‹¨ìœ„ í–‰ë ¬ë¡œ ì´ˆê¸°í™”í•˜ê³  ì´ ê°œì²´ì— ë³µì‚¬ë³¸ì„ ë³´ê´€í•¨
+	// ë Œë”ë§ì„ ìœ„í•´ ì…°ì´ë”ì— ë³µì‚¬ë³¸ì„ ì „ë‹¬í•´ì•¼ í•¨
 
 	// Initialize the world matrix to the identity matrix.
 	m_worldMatrix = XMMatrixIdentity();
 
-	// ¿©±â¿¡¼­ ÀÏ¹ÝÀûÀ¸·Î ºä Çà·ÄÀ» ¸¸µê
-	// ºä ¸ÅÆ®¸¯½º´Â ¿ì¸®°¡ Àå¸éÀ» º¸°í ÀÖ´Â À§Ä¡¸¦ °è»êÇÏ´Â µ¥ »ç¿ëµÊ
-	// Ä«¸Þ¶ó¶ó°í »ý°¢ÇÏ¸é µÇ°í, ÀÌ Ä«¸Þ¶ó¸¦ ÅëÇØ¼­¸¸ Àå¸éÀ» º¼ ¼ö ÀÖÀ½.
-	// ±× ¸ñÀû ¶§¹®¿¡ ³í¸®ÀûÀ¸·Î ´õ Àß ¸Â±â ¶§¹®¿¡ ÀÌÈÄ Æ©Åä¸®¾óÀÇ Ä«¸Þ¶ó Å¬·¡½º¿¡¼­ »ý¼ºÇÒ ¿¹Á¤ÀÌ¸ç, Áö±ÝÀº °Ç³Ê¶Ù±â¸¸ ÇÏ¸é µÊ.
+	// ì—¬ê¸°ì—ì„œ ì¼ë°˜ì ìœ¼ë¡œ ë·° í–‰ë ¬ì„ ë§Œë“¦
+	// ë·° ë§¤íŠ¸ë¦­ìŠ¤ëŠ” ìš°ë¦¬ê°€ ìž¥ë©´ì„ ë³´ê³  ìžˆëŠ” ìœ„ì¹˜ë¥¼ ê³„ì‚°í•˜ëŠ” ë° ì‚¬ìš©ë¨
+	// ì¹´ë©”ë¼ë¼ê³  ìƒê°í•˜ë©´ ë˜ê³ , ì´ ì¹´ë©”ë¼ë¥¼ í†µí•´ì„œë§Œ ìž¥ë©´ì„ ë³¼ ìˆ˜ ìžˆìŒ.
+	// ê·¸ ëª©ì  ë•Œë¬¸ì— ë…¼ë¦¬ì ìœ¼ë¡œ ë” ìž˜ ë§žê¸° ë•Œë¬¸ì— ì´í›„ íŠœí† ë¦¬ì–¼ì˜ ì¹´ë©”ë¼ í´ëž˜ìŠ¤ì—ì„œ ìƒì„±í•  ì˜ˆì •ì´ë©°, ì§€ê¸ˆì€ ê±´ë„ˆë›°ê¸°ë§Œ í•˜ë©´ ë¨.
 
-	// ±×¸®°í ÃÊ±âÈ­ ÇÔ¼ö¿¡¼­ ¼³Á¤ÇÒ ¸¶Áö¸· °ÍÀº Á÷±³ Åõ¿µ Çà·ÄÀÓ
-	// ÀÌ ¸ÅÆ®¸¯½º´Â È­¸éÀÇ »ç¿ëÀÚ ÀÎÅÍÆäÀÌ½º¿Í °°Àº 2D ¿ä¼Ò¸¦ ·»´õ¸µÇÏ´Â µ¥ »ç¿ëµÇ¹Ç·Î 3D ·»´õ¸µÀ» °Ç³Ê¶Û ¼ö ÀÖÀ½.
-	// 2D ±×·¡ÇÈ°ú ±Û²ÃÀ» È­¸é¿¡ ·»´õ¸µÇÏ´Â ¹æ¹ýÀ» »ìÆìº¼ ¶§ ÀÌÈÄ Æ©Åä¸®¾ó¿¡¼­ ÀÌ ¹æ¹ýÀÌ »ç¿ëµÇ´Â °ÍÀ» º¼ ¼ö ÀÖÀ½
+	// ê·¸ë¦¬ê³  ì´ˆê¸°í™” í•¨ìˆ˜ì—ì„œ ì„¤ì •í•  ë§ˆì§€ë§‰ ê²ƒì€ ì§êµ íˆ¬ì˜ í–‰ë ¬ìž„
+	// ì´ ë§¤íŠ¸ë¦­ìŠ¤ëŠ” í™”ë©´ì˜ ì‚¬ìš©ìž ì¸í„°íŽ˜ì´ìŠ¤ì™€ ê°™ì€ 2D ìš”ì†Œë¥¼ ë Œë”ë§í•˜ëŠ” ë° ì‚¬ìš©ë˜ë¯€ë¡œ 3D ë Œë”ë§ì„ ê±´ë„ˆë›¸ ìˆ˜ ìžˆìŒ.
+	// 2D ê·¸ëž˜í”½ê³¼ ê¸€ê¼´ì„ í™”ë©´ì— ë Œë”ë§í•˜ëŠ” ë°©ë²•ì„ ì‚´íŽ´ë³¼ ë•Œ ì´í›„ íŠœí† ë¦¬ì–¼ì—ì„œ ì´ ë°©ë²•ì´ ì‚¬ìš©ë˜ëŠ” ê²ƒì„ ë³¼ ìˆ˜ ìžˆìŒ
 
 	// Create an orthographic projection matrix for 2D rendering.
 	m_orthoMatrix = XMMatrixOrthographicLH((float)screenWidth, (float)screenHeight, screenNear, screenDepth);
@@ -434,10 +434,10 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	return true;
 }
 
-// Shutdown ÇÔ¼ö´Â initialize ÇÔ¼ö¿¡ »ç¿ëµÈ ¸ðµç Æ÷ÀÎÅÍ¸¦ ÇØÁ¦ÇÏ°í Á¤¸®ÇÔ
-// ´Ü, ±×·¯±â Àü¿¡ ½º¿Ò Ã¼ÀÎÀ» Ã¢ ¸ðµå·Î °­Á¦ ÀüÈ¯ÇÏ´Â È£ÃâÀ» ³ÖÀ½.
-// ÀÌ ÀÛ¾÷ÀÌ ¿Ï·áµÇÁö ¾ÊÀº »óÅÂ¿¡¼­ ÀüÃ¼ È­¸é ¸ðµå·Î ½º¿Ò Ã¼ÀÎÀ» ÇØÁ¦ÇÏ·Á°í ÇÏ¸é ¸î °¡Áö ¿¹¿Ü°¡ ¹ß»ýÇÔ.
-// µû¶ó¼­ Direct3D¸¦ Á¾·áÇÏ±â Àü¿¡ Ç×»ó Ã¢ ¸ðµå¸¦ °­Á¦ ½ÇÇàÇÔ.
+// Shutdown í•¨ìˆ˜ëŠ” initialize í•¨ìˆ˜ì— ì‚¬ìš©ëœ ëª¨ë“  í¬ì¸í„°ë¥¼ í•´ì œí•˜ê³  ì •ë¦¬í•¨
+// ë‹¨, ê·¸ëŸ¬ê¸° ì „ì— ìŠ¤ì™‘ ì²´ì¸ì„ ì°½ ëª¨ë“œë¡œ ê°•ì œ ì „í™˜í•˜ëŠ” í˜¸ì¶œì„ ë„£ìŒ.
+// ì´ ìž‘ì—…ì´ ì™„ë£Œë˜ì§€ ì•Šì€ ìƒíƒœì—ì„œ ì „ì²´ í™”ë©´ ëª¨ë“œë¡œ ìŠ¤ì™‘ ì²´ì¸ì„ í•´ì œí•˜ë ¤ê³  í•˜ë©´ ëª‡ ê°€ì§€ ì˜ˆì™¸ê°€ ë°œìƒí•¨.
+// ë”°ë¼ì„œ Direct3Dë¥¼ ì¢…ë£Œí•˜ê¸° ì „ì— í•­ìƒ ì°½ ëª¨ë“œë¥¼ ê°•ì œ ì‹¤í–‰í•¨.
 
 void D3DClass::Shutdown()
 {
@@ -498,10 +498,10 @@ void D3DClass::Shutdown()
 	return;
 }
 
-// D3DClass¿¡´Â ¸î °¡Áö µµ¿ì¹Ì ÇÔ¼ö°¡ ÀÖ½À´Ï´Ù. Ã³À½ µÎ °³´Â BeginScene ¹× EndSceneÀÔ´Ï´Ù.
-// BeginScene Àº °¢ ÇÁ·¹ÀÓÀÇ ½ÃÀÛ ºÎºÐ¿¡ »õ·Î¿î 3D ¾ÀÀ» ±×¸± ¶§¸¶´Ù È£ÃâµË´Ï´Ù.
-// ¹öÆÛ¸¦ ÃÊ±âÈ­ÇÏ¿© ºñ¾î ÀÖ°í ±×¸± ÁØºñ°¡ µÇµµ·Ï ÇÏ´Â °Í»ÓÀÔ´Ï´Ù.
-// ´Ù¸¥ ±â´ÉÀº EndsceneÀ¸·Î, °¢ ÇÁ·¹ÀÓÀÇ ³¡¿¡¼­ ¸ðµç ±×¸®±â°¡ ¿Ï·áµÇ¸é ½º¿Ò Ã¼ÀÎ¿¡ 3D Àå¸éÀ» Ç¥½ÃÇÏµµ·Ï Áö½ÃÇÕ´Ï´Ù.
+// D3DClassì—ëŠ” ëª‡ ê°€ì§€ ë„ìš°ë¯¸ í•¨ìˆ˜ê°€ ìžˆìŠµë‹ˆë‹¤. ì²˜ìŒ ë‘ ê°œëŠ” BeginScene ë° EndSceneìž…ë‹ˆë‹¤.
+// BeginScene ì€ ê° í”„ë ˆìž„ì˜ ì‹œìž‘ ë¶€ë¶„ì— ìƒˆë¡œìš´ 3D ì”¬ì„ ê·¸ë¦´ ë•Œë§ˆë‹¤ í˜¸ì¶œë©ë‹ˆë‹¤.
+// ë²„í¼ë¥¼ ì´ˆê¸°í™”í•˜ì—¬ ë¹„ì–´ ìžˆê³  ê·¸ë¦´ ì¤€ë¹„ê°€ ë˜ë„ë¡ í•˜ëŠ” ê²ƒë¿ìž…ë‹ˆë‹¤.
+// ë‹¤ë¥¸ ê¸°ëŠ¥ì€ Endsceneìœ¼ë¡œ, ê° í”„ë ˆìž„ì˜ ëì—ì„œ ëª¨ë“  ê·¸ë¦¬ê¸°ê°€ ì™„ë£Œë˜ë©´ ìŠ¤ì™‘ ì²´ì¸ì— 3D ìž¥ë©´ì„ í‘œì‹œí•˜ë„ë¡ ì§€ì‹œí•©ë‹ˆë‹¤.
 
 void D3DClass::BeginScene(float red, float green, float blue, float alpha)
 {
@@ -540,7 +540,7 @@ void D3DClass::EndScene()
 	return;
 }
 
-// ´Ü¼øÈ÷ Direct3D µð¹ÙÀÌ½º ¹× Direct3D µð¹ÙÀÌ½º ÄÁÅØ½ºÆ®¿¡ ´ëÇÑ Æ÷ÀÎÅÍ¸¦ °¡Á®¿È
+// ë‹¨ìˆœížˆ Direct3D ë””ë°”ì´ìŠ¤ ë° Direct3D ë””ë°”ì´ìŠ¤ ì»¨í…ìŠ¤íŠ¸ì— ëŒ€í•œ í¬ì¸í„°ë¥¼ ê°€ì ¸ì˜´
 
 ID3D11Device* D3DClass::GetDevice()
 {
@@ -552,9 +552,9 @@ ID3D11DeviceContext* D3DClass::GetDeviceContext()
 	return m_deviceContext;
 }
 
-// ÇÁ·ÎÁ§¼Ç, ¿ùµå ¹× Á÷±³ Çà·ÄÀÇ º¹»çº»À» È£Ãâ ÇÔ¼ö¿¡ Á¦°ø
-// ´ëºÎºÐÀÇ ¼ÎÀÌ´õ´Â ·»´õ¸µÀ» À§ÇØ ÀÌ·¯ÇÑ Çà·ÄÀÌ ÇÊ¿äÇÏ¹Ç·Î ¿ÜºÎ ¿ÀºêÁ§Æ®°¡ º¹»çº»À» ½±°Ô ¾òÀ» ¼ö ÀÖ´Â ¹æ¹ýÀÌ ÇÊ¿äÇß½À´Ï´Ù.
-// ÀÌ Æ©Åä¸®¾ó¿¡¼­´Â ÀÌ·¯ÇÑ ÇÔ¼ö¸¦ È£ÃâÇÏÁö ¾ÊÁö¸¸ ÄÚµå¿¡ ÀÖ´Â ÀÌÀ¯¸¸ ¼³¸íÇÏ°Ú½À´Ï´Ù.
+// í”„ë¡œì ì…˜, ì›”ë“œ ë° ì§êµ í–‰ë ¬ì˜ ë³µì‚¬ë³¸ì„ í˜¸ì¶œ í•¨ìˆ˜ì— ì œê³µ
+// ëŒ€ë¶€ë¶„ì˜ ì…°ì´ë”ëŠ” ë Œë”ë§ì„ ìœ„í•´ ì´ëŸ¬í•œ í–‰ë ¬ì´ í•„ìš”í•˜ë¯€ë¡œ ì™¸ë¶€ ì˜¤ë¸Œì íŠ¸ê°€ ë³µì‚¬ë³¸ì„ ì‰½ê²Œ ì–»ì„ ìˆ˜ ìžˆëŠ” ë°©ë²•ì´ í•„ìš”í–ˆìŠµë‹ˆë‹¤.
+// ì´ íŠœí† ë¦¬ì–¼ì—ì„œëŠ” ì´ëŸ¬í•œ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ì§€ ì•Šì§€ë§Œ ì½”ë“œì— ìžˆëŠ” ì´ìœ ë§Œ ì„¤ëª…í•˜ê² ìŠµë‹ˆë‹¤.
 
 void D3DClass::GetProjectionMatrix(XMMATRIX& projectionMatrix)
 {
@@ -576,8 +576,8 @@ void D3DClass::GetOrthoMatrix(XMMATRIX& orthoMatrix)
 	return;
 }
 
-// ÂüÁ¶·Î ºñµð¿À Ä«µåÀÇ ÀÌ¸§°ú ºñµð¿À ¸Þ¸ð¸® ¾çÀ» ¹ÝÈ¯ÇÔ
-// ºñµð¿À Ä«µå ÀÌ¸§À» ¾Ë¸é ´Ù¾çÇÑ ±¸¼º¿¡¼­ µð¹ö±ëÇÏ´Â µ¥ µµ¿òÀÌ µÉ ¼ö ÀÖÀ½
+// ì°¸ì¡°ë¡œ ë¹„ë””ì˜¤ ì¹´ë“œì˜ ì´ë¦„ê³¼ ë¹„ë””ì˜¤ ë©”ëª¨ë¦¬ ì–‘ì„ ë°˜í™˜í•¨
+// ë¹„ë””ì˜¤ ì¹´ë“œ ì´ë¦„ì„ ì•Œë©´ ë‹¤ì–‘í•œ êµ¬ì„±ì—ì„œ ë””ë²„ê¹…í•˜ëŠ” ë° ë„ì›€ì´ ë  ìˆ˜ ìžˆìŒ
 
 void D3DClass::GetVideoCardInfo(char* cardName, int& memory)
 {
@@ -586,7 +586,7 @@ void D3DClass::GetVideoCardInfo(char* cardName, int& memory)
 	return;
 }
 
-// ¸¶Áö¸· µÎ ÇÔ¼ö´Â ³ªÁß¿¡ render to texture ÀÚ½À¼­¿¡¼­ »ç¿ëµÊ
+// ë§ˆì§€ë§‰ ë‘ í•¨ìˆ˜ëŠ” ë‚˜ì¤‘ì— render to texture ìžìŠµì„œì—ì„œ ì‚¬ìš©ë¨
 
 void D3DClass::SetBackBufferRenderTarget()
 {

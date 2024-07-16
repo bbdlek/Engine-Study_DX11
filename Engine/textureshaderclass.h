@@ -1,5 +1,5 @@
-// TextureShaderClass Å¬·¡½º´Â ÀÌÀü Æ©Åä¸®¾óÀÇ ColorShaderClassÀÇ °³Á¤ÆÇ
-// ÀÌ Å¬·¡½º´Â Á¤Á¡ ¼ÎÀÌ´õ¿Í ÇÈ¼¿ ¼ÎÀÌ´õ¸¦ ÀÌ¿ëÇÏ¿© 3D ¸ðµ¨À» ±×¸®´Â µ¥ »ç¿ëµÉ °ÍÀÓ
+ï»¿// TextureShaderClass í´ëž˜ìŠ¤ëŠ” ì´ì „ íŠœí† ë¦¬ì–¼ì˜ ColorShaderClassì˜ ê°œì •íŒ
+// ì´ í´ëž˜ìŠ¤ëŠ” ì •ì  ì…°ì´ë”ì™€ í”½ì…€ ì…°ì´ë”ë¥¼ ì´ìš©í•˜ì—¬ 3D ëª¨ë¸ì„ ê·¸ë¦¬ëŠ” ë° ì‚¬ìš©ë  ê²ƒìž„
 
 #ifndef _TEXTURESHADERCLASS_H_
 #define _TEXTURESHADERCLASS_H_
@@ -44,7 +44,7 @@ private:
 	ID3D11InputLayout* m_layout;
 	ID3D11Buffer* m_matrixBuffer;
 
-	// ÀÌ Æ÷ÀÎÅÍ´Â ÅØ½ºÃÄ ¼ÎÀÌ´õ¿ÍÀÇ ÀÎÅÍÆäÀÌ½º·Î¼­ »ç¿ëµÉ °Í
+	// ì´ í¬ì¸í„°ëŠ” í…ìŠ¤ì³ ì…°ì´ë”ì™€ì˜ ì¸í„°íŽ˜ì´ìŠ¤ë¡œì„œ ì‚¬ìš©ë  ê²ƒ
 	ID3D11SamplerState* m_sampleState;
 };
 

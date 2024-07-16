@@ -1,4 +1,4 @@
-#ifndef _COLORSHADERCLASS_H_
+﻿#ifndef _COLORSHADERCLASS_H_
 #define _COLORSHADERCLASS_H_
 
 #include <d3d11.h>

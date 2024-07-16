@@ -1,4 +1,4 @@
-#ifndef _D3DCLASS_H_
+﻿#ifndef _D3DCLASS_H_
 #define _D3DCLASS_H_
 
 #pragma comment(lib, "d3d11.lib")

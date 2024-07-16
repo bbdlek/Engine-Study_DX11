@@ -1,4 +1,4 @@
-#include "textureshaderclass.h"
+ï»¿#include "textureshaderclass.h"
 
 TextureShaderClass::TextureShaderClass()
 {
@@ -24,7 +24,7 @@ bool TextureShaderClass::Initialize(ID3D11Device* device, HWND hwnd)
 	wchar_t psFilename[128];
 	int error;
 
-	// »õ·Î¿î HLSL ÆÄÀÏÀÎ texture.vs¿Í texture.ps°¡ ÀÌ ¼ÎÀÌ´õ¿¡ ºÒ·¯¿ÍÁü
+	// ìƒˆë¡œìš´ HLSL íŒŒì¼ì¸ texture.vsì™€ texture.psê°€ ì´ ì…°ì´ë”ì— ë¶ˆëŸ¬ì™€ì§
 	// Set the filename of the vertex shader.
 	error = wcscpy_s(vsFilename, 128, L"../Engine/texture.vs");
 	if (error != 0)
@@ -57,8 +57,8 @@ void TextureShaderClass::Shutdown()
 	return;
 }
 
-// Render ÇÔ¼ö´Â ÅØ½ºÃÄ ÀÚ¿øÀ» °¡¸®Å°´Â Æ÷ÀÎÅÍÀÎ textureÀÌ¶ó´Â »õ·Î¿î ÀÎÀÚ¸¦ ¹ÞÀ½
-// ÀÌ°ÍÀº SetShaderParameters·Î Àü´ÞµÇ¾î ·»´õ¸µ¿¡ »ç¿ëÇÒ ¼ÎÀÌ´õ¿¡ ¿¬°áµÊ
+// Render í•¨ìˆ˜ëŠ” í…ìŠ¤ì³ ìžì›ì„ ê°€ë¦¬í‚¤ëŠ” í¬ì¸í„°ì¸ textureì´ë¼ëŠ” ìƒˆë¡œìš´ ì¸ìžë¥¼ ë°›ìŒ
+// ì´ê²ƒì€ SetShaderParametersë¡œ ì „ë‹¬ë˜ì–´ ë Œë”ë§ì— ì‚¬ìš©í•  ì…°ì´ë”ì— ì—°ê²°ë¨
 bool TextureShaderClass::Render(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture)
 {
 	bool result;
@@ -86,7 +86,7 @@ bool TextureShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR
 	unsigned int numElements;
 	D3D11_BUFFER_DESC matrixBufferDesc;
 
-	// ÃÊ±âÈ­¸¦ À§ÇØ ÅØ½ºÃÄ »ùÇÃ·¯ÀÇ description º¯¼ö¸¦ »ç¿ë
+	// ì´ˆê¸°í™”ë¥¼ ìœ„í•´ í…ìŠ¤ì³ ìƒ˜í”ŒëŸ¬ì˜ description ë³€ìˆ˜ë¥¼ ì‚¬ìš©
 	D3D11_SAMPLER_DESC samplerDesc;
 
 	// Initialize the pointers this function will use to null.
@@ -94,7 +94,7 @@ bool TextureShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR
 	vertexShaderBuffer = 0;
 	pixelShaderBuffer = 0;
 
-	// Á¤Á¡ ¼ÎÀÌ´õ¿Í ÇÈ¼¿ ¼ÎÀÌ´õ¿¡ »õ ÅØ½ºÃÄ¸¦ ºÒ·¯¿À±â
+	// ì •ì  ì…°ì´ë”ì™€ í”½ì…€ ì…°ì´ë”ì— ìƒˆ í…ìŠ¤ì³ë¥¼ ë¶ˆëŸ¬ì˜¤ê¸°
 	// Compile the vertex shader code.
 	result = D3DCompileFromFile(vsFilename, NULL, NULL, "TextureVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0,
 		&vertexShaderBuffer, &errorMessage);
@@ -147,9 +147,9 @@ bool TextureShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR
 		return false;
 	}
 
-	// ÀÔ·Â ·¹ÀÌ¾Æ¿ôÀÌ »ö»ó ´ë½Å ÅØ½ºÃÄ¸¦ »ç¿ëÇÏ´Â °ÍÀ¸·Î ¹Ù²ñ
-	// Ã¹¹øÂ°ÀÎ POSITIONÀº ¹Ù²îÁö ¾Ê¾ÒÁö¸¸ µÎ¹øÂ°ÀÇ SemanticName°ú FormatÀÌ TEXCOORD¿Í DXGI_FORMAT_R32G32_FLOATÀ¸·Î ¹Ù²ñ
-	// ÀÌ µÎ°¡Áö º¯È­´Â ModelClassÀÇ Á¤ÀÇ¿Í ¼ÎÀÌ´õ ÆÄÀÏ¿¡ ÀÖ´Â VertexType°ú ÇüÅÂ°¡ ÀÏÄ¡ÇÏµµ·Ï ¸¸µê
+	// ìž…ë ¥ ë ˆì´ì•„ì›ƒì´ ìƒ‰ìƒ ëŒ€ì‹  í…ìŠ¤ì³ë¥¼ ì‚¬ìš©í•˜ëŠ” ê²ƒìœ¼ë¡œ ë°”ë€œ
+	// ì²«ë²ˆì§¸ì¸ POSITIONì€ ë°”ë€Œì§€ ì•Šì•˜ì§€ë§Œ ë‘ë²ˆì§¸ì˜ SemanticNameê³¼ Formatì´ TEXCOORDì™€ DXGI_FORMAT_R32G32_FLOATìœ¼ë¡œ ë°”ë€œ
+	// ì´ ë‘ê°€ì§€ ë³€í™”ëŠ” ModelClassì˜ ì •ì˜ì™€ ì…°ì´ë” íŒŒì¼ì— ìžˆëŠ” VertexTypeê³¼ í˜•íƒœê°€ ì¼ì¹˜í•˜ë„ë¡ ë§Œë“¦
 	// Create the vertex input layout description.
 	// This setup needs to match the VertexType stucture in the ModelClass and in the shader.
 	polygonLayout[0].SemanticName = "POSITION";
@@ -201,15 +201,15 @@ bool TextureShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR
 		return false;
 	}
 
-	// »ùÇÃ·¯ »óÅÂ descriptionµµ ¿©±â¼­ ¼³Á¤µÇ¸ç ³ªÁß¿¡ ÇÈ¼¿ ¼ÎÀÌ´õ·Î Àü´ÞµÊ
-	// »ùÇÃ·¯ description¿¡¼­ °¡Àå Áß¿äÇÑ ¿ä¼Ò´Â ¹Ù·Î Filter
-	// Filter´Â ÃÖÁ¾ µµÇü Ç¥¸é¿¡¼­ ÅØ½ºÃÄÀÇ ¾î´À ÇÈ¼¿ÀÌ »ç¿ëµÇ°Å³ª È¥ÇÕµÉ °ÍÀÎÁö °áÁ¤ÇÏ´Â ¹æ¹ýÀ» °áÁ¤ÇÔ
+	// ìƒ˜í”ŒëŸ¬ ìƒíƒœ descriptionë„ ì—¬ê¸°ì„œ ì„¤ì •ë˜ë©° ë‚˜ì¤‘ì— í”½ì…€ ì…°ì´ë”ë¡œ ì „ë‹¬ë¨
+	// ìƒ˜í”ŒëŸ¬ descriptionì—ì„œ ê°€ìž¥ ì¤‘ìš”í•œ ìš”ì†ŒëŠ” ë°”ë¡œ Filter
+	// FilterëŠ” ìµœì¢… ë„í˜• í‘œë©´ì—ì„œ í…ìŠ¤ì³ì˜ ì–´ëŠ í”½ì…€ì´ ì‚¬ìš©ë˜ê±°ë‚˜ í˜¼í•©ë  ê²ƒì¸ì§€ ê²°ì •í•˜ëŠ” ë°©ë²•ì„ ê²°ì •í•¨
 	// 
-	// ¿©±â¼­´Â Ã³¸®·® ¸é¿¡¼­´Â Á¶±Ý ¹«°ÌÁö¸¸ °¡Àå ÁÁÀº °á°ú¸¦ º¸¿©ÁÖ´Â D3D11_FILTER_MIN_MAG_MIP_LINEAR ¿É¼ÇÀ» »ç¿ëÇÔ
-	// ÀÌ°ÍÀº Ãà¼Ò, È®´ë, ¹Ó·¹º§ »ùÇÃ¸µ ½Ã¿¡ ¼±Çü º¸°£À» »ç¿ëÇÔ
+	// ì—¬ê¸°ì„œëŠ” ì²˜ë¦¬ëŸ‰ ë©´ì—ì„œëŠ” ì¡°ê¸ˆ ë¬´ê²ì§€ë§Œ ê°€ìž¥ ì¢‹ì€ ê²°ê³¼ë¥¼ ë³´ì—¬ì£¼ëŠ” D3D11_FILTER_MIN_MAG_MIP_LINEAR ì˜µì…˜ì„ ì‚¬ìš©í•¨
+	// ì´ê²ƒì€ ì¶•ì†Œ, í™•ëŒ€, ë°‰ë ˆë²¨ ìƒ˜í”Œë§ ì‹œì— ì„ í˜• ë³´ê°„ì„ ì‚¬ìš©í•¨
 	//
-	// AddressU¿Í AddressV´Â ÁÂÇ¥°¡ ¾ðÁ¦³ª 0.0f¿Í 1.0f »çÀÌ¿¡ ÀÖµµ·Ï ÇØÁÖ´Â WrapÀ¸·Î ¼³Á¤µÊ
-	// ¸ðµç ´Ù¸¥ »ùÇÃ·¯ »óÅÂ descriptionÀÇ ¿É¼ÇµéÀº ±âº»°ªÀ¸·Î ¼³Á¤ÇÏ¿´À½
+	// AddressUì™€ AddressVëŠ” ì¢Œí‘œê°€ ì–¸ì œë‚˜ 0.0fì™€ 1.0f ì‚¬ì´ì— ìžˆë„ë¡ í•´ì£¼ëŠ” Wrapìœ¼ë¡œ ì„¤ì •ë¨
+	// ëª¨ë“  ë‹¤ë¥¸ ìƒ˜í”ŒëŸ¬ ìƒíƒœ descriptionì˜ ì˜µì…˜ë“¤ì€ ê¸°ë³¸ê°’ìœ¼ë¡œ ì„¤ì •í•˜ì˜€ìŒ
 	// Create a texture sampler state description.
 	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
@@ -275,7 +275,7 @@ void TextureShaderClass::ShutdownShader()
 	return;
 }
 
-// OutputShaderErrorMessage ÇÔ¼ö´Â HLSL ¼ÎÀÌ´õ°¡ ·ÎµåµÇÁö ¸øÇÏ´Â °æ¿ì ÅØ½ºÆ® ÆÄÀÏ¿¡ ¿¡·¯ ³»¿ëÀ» ÀÛ¼º
+// OutputShaderErrorMessage í•¨ìˆ˜ëŠ” HLSL ì…°ì´ë”ê°€ ë¡œë“œë˜ì§€ ëª»í•˜ëŠ” ê²½ìš° í…ìŠ¤íŠ¸ íŒŒì¼ì— ì—ëŸ¬ ë‚´ìš©ì„ ìž‘ì„±
 void TextureShaderClass::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, WCHAR* shaderFilename)
 {
 	char* compileErrors;
@@ -311,8 +311,8 @@ void TextureShaderClass::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND
 	return;
 }
 
-// SetShaderParameters ÇÔ¼ö´Â ÀÌÁ¦ ÅØ½ºÃÄ ÀÚ¿øÀÇ Æ÷ÀÎÅÍ¸¦ ÀÎÀÚ·Î ¹Þ°í ±×°ÍÀ» ¼ÎÀÌ´õ¿¡ µî·Ï
-// Âü°í·Î ÅØ½ºÃÄ´Â ¹Ýµå½Ã ¹öÆÛ¿¡ ·»´õ¸µÀÌ ÀÏ¾î³ª±â Àü¿¡ ¼³Á¤µÇ¾î ÀÖ¾î¾ß ÇÔ
+// SetShaderParameters í•¨ìˆ˜ëŠ” ì´ì œ í…ìŠ¤ì³ ìžì›ì˜ í¬ì¸í„°ë¥¼ ì¸ìžë¡œ ë°›ê³  ê·¸ê²ƒì„ ì…°ì´ë”ì— ë“±ë¡
+// ì°¸ê³ ë¡œ í…ìŠ¤ì³ëŠ” ë°˜ë“œì‹œ ë²„í¼ì— ë Œë”ë§ì´ ì¼ì–´ë‚˜ê¸° ì „ì— ì„¤ì •ë˜ì–´ ìžˆì–´ì•¼ í•¨
 bool TextureShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture)
 {
 	HRESULT result;
@@ -350,15 +350,15 @@ bool TextureShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext,
 	// Finanly set the constant buffer in the vertex shader with the updated values.
 	deviceContext->VSSetConstantBuffers(bufferNumber, 1, &m_matrixBuffer);
 
-	// colorshaderclass¿ÍÀÇ Â÷ÀÌÁ¡
-	// ÇÈ¼¿ ¼ÎÀÌ´õ¿¡ ÅØ½ºÃÄ¸¦ ¼³Á¤ÇÏ´Â ºÎºÐ
+	// colorshaderclassì™€ì˜ ì°¨ì´ì 
+	// í”½ì…€ ì…°ì´ë”ì— í…ìŠ¤ì³ë¥¼ ì„¤ì •í•˜ëŠ” ë¶€ë¶„
 	// Set shader texture resource in the pixel shader.
 	deviceContext->PSSetShaderResources(0, 1, &texture);
 
 	return true;
 }
 
-// µµÇüÀ» ±×¸®±â À§ÇÑ ¼ÎÀÌ´õ¸¦ È£Ãâ
+// ë„í˜•ì„ ê·¸ë¦¬ê¸° ìœ„í•œ ì…°ì´ë”ë¥¼ í˜¸ì¶œ
 void TextureShaderClass::RenderShader(ID3D11DeviceContext* deviceContext, int indexCount)
 {
 	// Set the vertex input layout.
@@ -368,7 +368,7 @@ void TextureShaderClass::RenderShader(ID3D11DeviceContext* deviceContext, int in
 	deviceContext->VSSetShader(m_vertexShader, NULL, 0);
 	deviceContext->PSSetShader(m_pixelShader, NULL, 0);
 
-	// ±×¸®´Â ÀÛ¾÷ ÀÌÀü¿¡ ÇÈ¼¿ ¼ÎÀÌ´õÀÇ »ùÇÃ·¯ »óÅÂ¸¦ ¼³Á¤ÇÏ´Â ºÎºÐÀÌ Æ÷ÇÔµÇµµ·Ï ¹Ù²ñ
+	// ê·¸ë¦¬ëŠ” ìž‘ì—… ì´ì „ì— í”½ì…€ ì…°ì´ë”ì˜ ìƒ˜í”ŒëŸ¬ ìƒíƒœë¥¼ ì„¤ì •í•˜ëŠ” ë¶€ë¶„ì´ í¬í•¨ë˜ë„ë¡ ë°”ë€œ
 	// Set the sampler state in the pixel shader.
 	deviceContext->PSSetSamplers(0, 1, &m_sampleState);
 

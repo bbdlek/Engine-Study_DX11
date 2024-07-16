@@ -1,6 +1,6 @@
-#include "cameraclass.h"
+ï»¿#include "cameraclass.h"
 
-// Ä«¸Þ¶ó À§Ä¡¿Í È¸ÀüÀÇ SceneÀÇ ¿øÁ¡¿¡ ÀÖµµ·Ï ÃÊ±âÈ­
+// ì¹´ë©”ë¼ ìœ„ì¹˜ì™€ íšŒì „ì˜ Sceneì˜ ì›ì ì— ìžˆë„ë¡ ì´ˆê¸°í™”
 CameraClass::CameraClass()
 {
 	m_positionX = 0.0f;
@@ -46,11 +46,11 @@ XMFLOAT3 CameraClass::GetRotation()
 	return XMFLOAT3(m_rotationX, m_rotationY, m_rotationZ);
 }
 
-// Render ÇÔ¼ö´Â Ä«¸Þ¶óÀÇ À§Ä¡¿Í È¸Àü Á¤º¸¸¦ ÀÌ¿ëÇÏ¿© ºä Çà·ÄÀ» °»½Å
-// ¿ì¼± up º¤ÅÍ¿Í À§Ä¡, È¸Àü µîÀÇ º¯¼ö¸¦ ÃÊ±âÈ­
-// È­¸éÀÇ ¿øÁ¡¿¡¼­ ¿ì¼± Ä«¸Þ¶óÀÇ x, y, zÃàÀÇ È¸Àü Á¤µµ·Î Ä«¸Þ¶óÀÇ È¸ÀüÀ» ¼öÇà
-// È¸ÀüÀÌ Àß ÀÌ·ç¾îÁö¸é Ä«¸Þ¶ó¸¦ 3D ¼¼°èÀÇ ¿Ã¹Ù¸¥ À§Ä¡·Î ¿Å°Ü³õÀ½
-// position°ú lookAt ±×¸®°í upÀÇ °ªÀÌ Àß ¼³Á¤µÇ¾ú´Ù¸é D3DXMatrixLookAtLH ÇÔ¼ö¸¦ »ç¿ëÇÏ¿© ÇöÀç Ä«¸Þ¶óÀÇ À§Ä¡¿Í È¸Àü Á¤µµ¸¦ Ç¥ÇöÇÏ´Â ºä Çà·ÄÀ» ¸¸µé¾î³À
+// Render í•¨ìˆ˜ëŠ” ì¹´ë©”ë¼ì˜ ìœ„ì¹˜ì™€ íšŒì „ ì •ë³´ë¥¼ ì´ìš©í•˜ì—¬ ë·° í–‰ë ¬ì„ ê°±ì‹ 
+// ìš°ì„  up ë²¡í„°ì™€ ìœ„ì¹˜, íšŒì „ ë“±ì˜ ë³€ìˆ˜ë¥¼ ì´ˆê¸°í™”
+// í™”ë©´ì˜ ì›ì ì—ì„œ ìš°ì„  ì¹´ë©”ë¼ì˜ x, y, zì¶•ì˜ íšŒì „ ì •ë„ë¡œ ì¹´ë©”ë¼ì˜ íšŒì „ì„ ìˆ˜í–‰
+// íšŒì „ì´ ìž˜ ì´ë£¨ì–´ì§€ë©´ ì¹´ë©”ë¼ë¥¼ 3D ì„¸ê³„ì˜ ì˜¬ë°”ë¥¸ ìœ„ì¹˜ë¡œ ì˜®ê²¨ë†“ìŒ
+// positionê³¼ lookAt ê·¸ë¦¬ê³  upì˜ ê°’ì´ ìž˜ ì„¤ì •ë˜ì—ˆë‹¤ë©´ D3DXMatrixLookAtLH í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•˜ì—¬ í˜„ìž¬ ì¹´ë©”ë¼ì˜ ìœ„ì¹˜ì™€ íšŒì „ ì •ë„ë¥¼ í‘œí˜„í•˜ëŠ” ë·° í–‰ë ¬ì„ ë§Œë“¤ì–´ëƒ…
 void CameraClass::Render()
 {
 	XMFLOAT3 up, position, lookAt;
@@ -103,8 +103,8 @@ void CameraClass::Render()
 	return;
 }
 
-// ºä Çà·ÄÀ» »ý¼ºÇÏ´Â Render ÇÔ¼ö¸¦ ¼öÇàÇÑ ÀÌÈÄ·Î´Â GetViewMatrix ÇÔ¼ö¸¦ »ç¿ëÇÏ¿© ºä Çà·ÄÀ» ¾ò¾î¿Ã ¼ö ÀÖ°Ô µÊ
-// ºä Çà·ÄÀº HLSL Á¤Á¡ ¼ÎÀÌ´õ¿¡¼­ »ç¿ëÇÏ´Â Áß¿äÇÑ ¼¼ Çà·Ä ÁßÀÇ ÇÏ³ª
+// ë·° í–‰ë ¬ì„ ìƒì„±í•˜ëŠ” Render í•¨ìˆ˜ë¥¼ ìˆ˜í–‰í•œ ì´í›„ë¡œëŠ” GetViewMatrix í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•˜ì—¬ ë·° í–‰ë ¬ì„ ì–»ì–´ì˜¬ ìˆ˜ ìžˆê²Œ ë¨
+// ë·° í–‰ë ¬ì€ HLSL ì •ì  ì…°ì´ë”ì—ì„œ ì‚¬ìš©í•˜ëŠ” ì¤‘ìš”í•œ ì„¸ í–‰ë ¬ ì¤‘ì˜ í•˜ë‚˜
 void CameraClass::GetViewMatrix(XMMATRIX& viewMatrix)
 {
 	viewMatrix = m_viewMatrix;

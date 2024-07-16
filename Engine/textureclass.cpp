@@ -1,4 +1,4 @@
-#include "textureclass.h"
+ï»¿#include "textureclass.h"
 
 TextureClass::TextureClass()
 {
@@ -15,9 +15,9 @@ TextureClass::~TextureClass()
 {
 }
 
-// ¸ÕÀú Targa µ¥ÀÌÅÍ¸¦ ¹è¿­¿¡ ·Îµå
-// ±× ´ÙÀ½ ÅØ½ºÃÄ¸¦ ¸¸µé°í Targa µ¥ÀÌÅÍ¸¦ ¿Ã¹Ù¸¥ Çü½ÄÀ¸·Î ·Îµå(Targa ÀÌ¹ÌÁö´Â ±âº»ÀûÀ¸·Î À§ÂÊÀÌ¹Ç·Î ¹ÝÀüÇØ¾ß ÇÔ)
-// ±×·± ´ÙÀ½ ÅØ½ºÃÄ°¡ ·ÎµåµÇ¸é ¼ÎÀÌ´õ°¡ ±×¸®±â¿¡ »ç¿ëÇÒ ÅØ½ºÃÄÀÇ ¸®¼Ò½ººä »ý¼ºµÊ
+// ë¨¼ì € Targa ë°ì´í„°ë¥¼ ë°°ì—´ì— ë¡œë“œ
+// ê·¸ ë‹¤ìŒ í…ìŠ¤ì³ë¥¼ ë§Œë“¤ê³  Targa ë°ì´í„°ë¥¼ ì˜¬ë°”ë¥¸ í˜•ì‹ìœ¼ë¡œ ë¡œë“œ(Targa ì´ë¯¸ì§€ëŠ” ê¸°ë³¸ì ìœ¼ë¡œ ìœ„ìª½ì´ë¯€ë¡œ ë°˜ì „í•´ì•¼ í•¨)
+// ê·¸ëŸ° ë‹¤ìŒ í…ìŠ¤ì³ê°€ ë¡œë“œë˜ë©´ ì…°ì´ë”ê°€ ê·¸ë¦¬ê¸°ì— ì‚¬ìš©í•  í…ìŠ¤ì³ì˜ ë¦¬ì†ŒìŠ¤ë·° ìƒì„±ë¨
 bool TextureClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* filename)
 {
 	bool result;
@@ -27,7 +27,7 @@ bool TextureClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 	unsigned int rowPitch;
 	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
 
-	// ¸ÕÀú Targa ÆÄÀÏÀ» m_targaData ¹è¿­¿¡ ·Îµå
+	// ë¨¼ì € Targa íŒŒì¼ì„ m_targaData ë°°ì—´ì— ë¡œë“œ
 	// Load the targa image data into memory.
 	result = LoadTarga32Bit(filename);
 	if (!result)
@@ -35,13 +35,13 @@ bool TextureClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 		return false;
 	}
 
-	// ±× ´ÙÀ½ Targa µ¥ÀÌÅÍ¸¦ ·ÎµåÇÒ DirectX ÅØ½ºÃÄ¿¡ ´ëÇÑ descriptionÀ» ±¸¼ºÇØ¾ß ÇÔ
-	// Targa ÀÌ¹ÌÁö µ¥ÀÌÅÍÀÇ ³ôÀÌ¿Í ³Êºñ¸¦ »ç¿ëÇÏ°í, Çü½ÄÀ» 32ºñÆ® RGBA ÅØ½ºÃÄ·Î ¼³Á¤
-	// SampleDesc¸¦ ±âº»°ªÀ¸·Î ¼³Á¤
-	// ±× ´ÙÀ½ Usage¸¦ ´õ ³ªÀº ¼º´ÉÀÇ ¸Þ¸ð¸®ÀÎ D3D11_USAGE_DEFAULT·Î ¼³Á¤
-	// ¸¶Áö¸·À¸·Î MipLevels, BindFlags ¹× MiscFlags¸¦ ¹Ó¸Ê ÅØ½ºÃÄ¿¡ ÇÊ¿äÇÑ ¼¼ÆÃÀ¸·Î ¼³Á¤
-	// descriptionÀÌ ¿Ï·áµÇ¸é CreateTexture2D·Î ºó ÅØ½ºÃÄ¸¦ ¸¸µê
-	// ÀÌÈÄ Targa µ¥ÀÌÅÍ¸¦ ºó ÅØ½ºÃÄ¿¡ º¹»ç
+	// ê·¸ ë‹¤ìŒ Targa ë°ì´í„°ë¥¼ ë¡œë“œí•  DirectX í…ìŠ¤ì³ì— ëŒ€í•œ descriptionì„ êµ¬ì„±í•´ì•¼ í•¨
+	// Targa ì´ë¯¸ì§€ ë°ì´í„°ì˜ ë†’ì´ì™€ ë„ˆë¹„ë¥¼ ì‚¬ìš©í•˜ê³ , í˜•ì‹ì„ 32ë¹„íŠ¸ RGBA í…ìŠ¤ì³ë¡œ ì„¤ì •
+	// SampleDescë¥¼ ê¸°ë³¸ê°’ìœ¼ë¡œ ì„¤ì •
+	// ê·¸ ë‹¤ìŒ Usageë¥¼ ë” ë‚˜ì€ ì„±ëŠ¥ì˜ ë©”ëª¨ë¦¬ì¸ D3D11_USAGE_DEFAULTë¡œ ì„¤ì •
+	// ë§ˆì§€ë§‰ìœ¼ë¡œ MipLevels, BindFlags ë° MiscFlagsë¥¼ ë°‰ë§µ í…ìŠ¤ì³ì— í•„ìš”í•œ ì„¸íŒ…ìœ¼ë¡œ ì„¤ì •
+	// descriptionì´ ì™„ë£Œë˜ë©´ CreateTexture2Dë¡œ ë¹ˆ í…ìŠ¤ì³ë¥¼ ë§Œë“¦
+	// ì´í›„ Targa ë°ì´í„°ë¥¼ ë¹ˆ í…ìŠ¤ì³ì— ë³µì‚¬
 	// Setup the description of the texture.
 	textureDesc.Height = m_height;
 	textureDesc.Width = m_width;
@@ -65,25 +65,25 @@ bool TextureClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 	// Set the row pitch of the targa image data.
 	rowPitch = (m_width * 4) * sizeof(unsigned char);
 
-	// ¿©±â¼­´Â ½ÇÁ¦·Î Targa µ¥ÀÌÅÍ ¹è¿­À» DirectX ÅØ½ºÃÄ·Î º¹»çÇÏ±â À§ÇØ UpdateSubresource¸¦ »ç¿ë
+	// ì—¬ê¸°ì„œëŠ” ì‹¤ì œë¡œ Targa ë°ì´í„° ë°°ì—´ì„ DirectX í…ìŠ¤ì³ë¡œ ë³µì‚¬í•˜ê¸° ìœ„í•´ UpdateSubresourceë¥¼ ì‚¬ìš©
 	// 
-	// ModelClass¿¡¼­Ã³·³ Map ¹× UnmapÀ» »ç¿ëÇÏ¿© Çà·ÄÀ» Çà·Ä »ó¼ö ¹öÆÛ¿¡ º¹»çÇÒ ¼ö ÀÖ±ä ÇÏÁö¸¸,
-	// µÎ ·Îµù ¹æ¹ý(UpdateSubresource, Map & Unmap) ¸ðµÎ Æ¯Á¤ ¸ñÁ¤À» °®°í ÀÖÀ¸¹Ç·Î ¼º´É»óÀÇ ÀÌÀ¯·Î ¿Ã¹Ù¸£°Ô ¼±ÅÃÇØ¾ßÇÔ
-	// Map & Unmap : ÈÎ¾À ºü¸§, ¸Å ÇÁ·¹ÀÓ¸¶´Ù ¶Ç´Â ¸Å¿ì Á¤±âÀûÀ¸·Î ´Ù½Ã ·ÎµåµÇ´Â µ¥ÀÌÅÍ¿¡ ´ëÇØ »ç¿ëÇÏ´Â °ÍÀÌ ÁÁÀ½
-	// UpdateSubresource : ÇÑ ¹ø ·ÎµåµÇ°Å³ª ·Îµå ½ÃÄö½º Áß¿¡ °ÅÀÇ ·ÎµåµÇÁö ¾Ê´Â µ¥ÀÌÅÍ¿¡ ´ëÇØ »ç¿ëÇÏ´Â °ÍÀÌ ÁÁÀ½
-	// --------> ±× ÀÌÀ¯´Â UpdateSubresource°¡ µ¥ÀÌÅÍ¸¦ °ð Á¦°ÅÇÏ°Å³ª ´Ù½Ã ·ÎµåÇÏÁö ¾ÊÀ» °ÍÀ» ¾Ë±â ¶§¹®¿¡ Ä³½Ã º¸Á¸ ¿ì¼± ¼øÀ§¸¦ °®´Â °í¼Ó ¸Þ¸ð¸®¿¡ µ¥ÀÌÅÍ¸¦ ÀúÀåÇÏ±â ¶§¹®
+	// ModelClassì—ì„œì²˜ëŸ¼ Map ë° Unmapì„ ì‚¬ìš©í•˜ì—¬ í–‰ë ¬ì„ í–‰ë ¬ ìƒìˆ˜ ë²„í¼ì— ë³µì‚¬í•  ìˆ˜ ìžˆê¸´ í•˜ì§€ë§Œ,
+	// ë‘ ë¡œë”© ë°©ë²•(UpdateSubresource, Map & Unmap) ëª¨ë‘ íŠ¹ì • ëª©ì •ì„ ê°–ê³  ìžˆìœ¼ë¯€ë¡œ ì„±ëŠ¥ìƒì˜ ì´ìœ ë¡œ ì˜¬ë°”ë¥´ê²Œ ì„ íƒí•´ì•¼í•¨
+	// Map & Unmap : í›¨ì”¬ ë¹ ë¦„, ë§¤ í”„ë ˆìž„ë§ˆë‹¤ ë˜ëŠ” ë§¤ìš° ì •ê¸°ì ìœ¼ë¡œ ë‹¤ì‹œ ë¡œë“œë˜ëŠ” ë°ì´í„°ì— ëŒ€í•´ ì‚¬ìš©í•˜ëŠ” ê²ƒì´ ì¢‹ìŒ
+	// UpdateSubresource : í•œ ë²ˆ ë¡œë“œë˜ê±°ë‚˜ ë¡œë“œ ì‹œí€€ìŠ¤ ì¤‘ì— ê±°ì˜ ë¡œë“œë˜ì§€ ì•ŠëŠ” ë°ì´í„°ì— ëŒ€í•´ ì‚¬ìš©í•˜ëŠ” ê²ƒì´ ì¢‹ìŒ
+	// --------> ê·¸ ì´ìœ ëŠ” UpdateSubresourceê°€ ë°ì´í„°ë¥¼ ê³§ ì œê±°í•˜ê±°ë‚˜ ë‹¤ì‹œ ë¡œë“œí•˜ì§€ ì•Šì„ ê²ƒì„ ì•Œê¸° ë•Œë¬¸ì— ìºì‹œ ë³´ì¡´ ìš°ì„  ìˆœìœ„ë¥¼ ê°–ëŠ” ê³ ì† ë©”ëª¨ë¦¬ì— ë°ì´í„°ë¥¼ ì €ìž¥í•˜ê¸° ë•Œë¬¸
 	// 
-	// UpdateSubresource¸¦ »ç¿ëÇÏ¿© ·ÎµåÇÒ ¶§ D3D11_USAGE_DEFAULT¸¦ »ç¿ëÇÏ¿© DirectX¿¡µµ ¾Ë¸²
-	// Map ¹× UnmapÀº DirectX¿¡¼­ µ¥ÀÌÅÍ°¡ °ð µ¤¾î¾²¿©Áú °ÍÀ¸·Î ¿¹»óÇÏ¹Ç·Î Ä³½ÃµÇÁö ¾Ê´Â ¸Þ¸ð¸® À§Ä¡¿¡ µ¥ÀÌÅÍ¸¦ ÀúÀåÇÔ
-	// ÀÌ°ÍÀÌ ¹Ù·Î ¿ì¸®°¡ D3D11_USAGE_DYNAMICÀ» »ç¿ëÇÏ¿© ÀÌ·¯ÇÑ À¯ÇüÀÇ µ¥ÀÌÅÍ°¡ ÀÏ½ÃÀûÀÓÀ» DirectX¿¡ ¾Ë¸®´Â ÀÌÀ¯
+	// UpdateSubresourceë¥¼ ì‚¬ìš©í•˜ì—¬ ë¡œë“œí•  ë•Œ D3D11_USAGE_DEFAULTë¥¼ ì‚¬ìš©í•˜ì—¬ DirectXì—ë„ ì•Œë¦¼
+	// Map ë° Unmapì€ DirectXì—ì„œ ë°ì´í„°ê°€ ê³§ ë®ì–´ì“°ì—¬ì§ˆ ê²ƒìœ¼ë¡œ ì˜ˆìƒí•˜ë¯€ë¡œ ìºì‹œë˜ì§€ ì•ŠëŠ” ë©”ëª¨ë¦¬ ìœ„ì¹˜ì— ë°ì´í„°ë¥¼ ì €ìž¥í•¨
+	// ì´ê²ƒì´ ë°”ë¡œ ìš°ë¦¬ê°€ D3D11_USAGE_DYNAMICì„ ì‚¬ìš©í•˜ì—¬ ì´ëŸ¬í•œ ìœ í˜•ì˜ ë°ì´í„°ê°€ ì¼ì‹œì ìž„ì„ DirectXì— ì•Œë¦¬ëŠ” ì´ìœ 
 	
 	// Copy the targa image data into the texture.
 	deviceContext->UpdateSubresource(m_texture, 0, NULL, m_targaData, rowPitch, 0);
 
-	// ÅØ½ºÃÄ°¡ ·ÎµåµÈ ÈÄ ¼ÎÀÌ´õ¿¡¼­ ÅØ½ºÃÄ¸¦ ¼³Á¤ÇÏ±â À§ÇÑ Æ÷ÀÎÅÍ¸¦ °¡Áú ¼ö ÀÖ´Â ¼ÎÀÌ´õ ¸®¼Ò½º ºä »ý¼º
-	// description¿¡¼­ µÎ °¡Áö Áß¿äÇÑ ¹Ó¸Ê º¯¼ö¸¦ ¼³Á¤Çß´Âµ¥, ÀÌ´Â ¾î¶² °Å¸®¿¡¼­µµ °íÇ°Áú ÅØ½ºÃ³ ·»´õ¸µÀ» À§ÇÑ ÀüÃ¼ ¹Ó¸Ê ·¹º§ ¹üÀ§¸¦ Á¦°øÇÔ
-	// ¼ÎÀÌ´õ ¸®¼Ò½º ºä°¡ »ý¼ºµÇ¸é GenerateMips¸¦ È£ÃâÇÏ¿© ¹Ó¸ÊÀ» »ý¼ºÇÔ
-	// ¿øÇÏ´Â °æ¿ì ´õ ³ªÀº Ç°ÁúÀ» ¿øÇÏ¸é Mipmap ·¹º§À» ¼öµ¿À¸·Î ·Îµå °¡´É
+	// í…ìŠ¤ì³ê°€ ë¡œë“œëœ í›„ ì…°ì´ë”ì—ì„œ í…ìŠ¤ì³ë¥¼ ì„¤ì •í•˜ê¸° ìœ„í•œ í¬ì¸í„°ë¥¼ ê°€ì§ˆ ìˆ˜ ìžˆëŠ” ì…°ì´ë” ë¦¬ì†ŒìŠ¤ ë·° ìƒì„±
+	// descriptionì—ì„œ ë‘ ê°€ì§€ ì¤‘ìš”í•œ ë°‰ë§µ ë³€ìˆ˜ë¥¼ ì„¤ì •í–ˆëŠ”ë°, ì´ëŠ” ì–´ë–¤ ê±°ë¦¬ì—ì„œë„ ê³ í’ˆì§ˆ í…ìŠ¤ì²˜ ë Œë”ë§ì„ ìœ„í•œ ì „ì²´ ë°‰ë§µ ë ˆë²¨ ë²”ìœ„ë¥¼ ì œê³µí•¨
+	// ì…°ì´ë” ë¦¬ì†ŒìŠ¤ ë·°ê°€ ìƒì„±ë˜ë©´ GenerateMipsë¥¼ í˜¸ì¶œí•˜ì—¬ ë°‰ë§µì„ ìƒì„±í•¨
+	// ì›í•˜ëŠ” ê²½ìš° ë” ë‚˜ì€ í’ˆì§ˆì„ ì›í•˜ë©´ Mipmap ë ˆë²¨ì„ ìˆ˜ë™ìœ¼ë¡œ ë¡œë“œ ê°€ëŠ¥
 	
 	// Setup the shader resource view description.
 	srvDesc.Format = textureDesc.Format;
@@ -134,8 +134,8 @@ void TextureClass::Shutdown()
 	return;
 }
 
-// GetTexture ÇÔ¼ö´Â ´Ù¸¥ °´Ã¼°¡ ÀÌ ÅØ½ºÃÄ ¼ÎÀÌ´õ ÀÚ¿ø¿¡ Á¢±ÙÇÒ ÇÊ¿ä°¡ ÀÖÀ» ¶§ »ç¿ëµÊ
-// ÀÌ ÇÔ¼ö¸¦ ÅëÇØ¼­ ÅØ½ºÃÄ¸¦ ·»´õ¸µÇÒ ¼ö ÀÖ°Ô µÊ
+// GetTexture í•¨ìˆ˜ëŠ” ë‹¤ë¥¸ ê°ì²´ê°€ ì´ í…ìŠ¤ì³ ì…°ì´ë” ìžì›ì— ì ‘ê·¼í•  í•„ìš”ê°€ ìžˆì„ ë•Œ ì‚¬ìš©ë¨
+// ì´ í•¨ìˆ˜ë¥¼ í†µí•´ì„œ í…ìŠ¤ì³ë¥¼ ë Œë”ë§í•  ìˆ˜ ìžˆê²Œ ë¨
 ID3D11ShaderResourceView* TextureClass::GetTexture()
 {
 	return m_textureView;
@@ -151,10 +151,10 @@ int TextureClass::GetHeight()
 	return m_height;
 }
 
-// Targa ÀÌ¹ÌÁö ·Îµå
-// Targa ÀÌ¹ÌÁö´Â °Å²Ù·Î ÀúÀåµÇ¹Ç·Î »ç¿ëÇÏ±â Àü¿¡ µÚÁý¾î¾ß ÇÑ´Ù´Â Á¡À» ´Ù½Ã ÇÑ ¹ø Âü°í
-// µû¶ó¼­ ¿©±â¼­´Â ÆÄÀÏÀ» ¿­°í ¹è¿­·Î ÀÐÀº ´ÙÀ½ ÇØ´ç ¹è¿­ µ¥ÀÌÅÍ¸¦ °¡Á®¿Í ¿Ã¹Ù¸¥ ¼ø¼­·Î m_targaData ¹è¿­¿¡ ·ÎµåÇÔ
-// ¿©±â¼­´Â ÀÇµµÀûÀ¸·Î ¾ËÆÄ Ã¤³ÎÀÌ ÀÖ´Â 32ºñÆ® Targa ÆÄÀÏ¸¸ ´Ù·ç°í ÀÖÀ¸¸ç, ÀÌ ±â´ÉÀº 24ºñÆ®·Î ÀúÀåµÈ Targa ÆÄÀÏÀ» °ÅºÎÇÏ°í ÀÖÀ½
+// Targa ì´ë¯¸ì§€ ë¡œë“œ
+// Targa ì´ë¯¸ì§€ëŠ” ê±°ê¾¸ë¡œ ì €ìž¥ë˜ë¯€ë¡œ ì‚¬ìš©í•˜ê¸° ì „ì— ë’¤ì§‘ì–´ì•¼ í•œë‹¤ëŠ” ì ì„ ë‹¤ì‹œ í•œ ë²ˆ ì°¸ê³ 
+// ë”°ë¼ì„œ ì—¬ê¸°ì„œëŠ” íŒŒì¼ì„ ì—´ê³  ë°°ì—´ë¡œ ì½ì€ ë‹¤ìŒ í•´ë‹¹ ë°°ì—´ ë°ì´í„°ë¥¼ ê°€ì ¸ì™€ ì˜¬ë°”ë¥¸ ìˆœì„œë¡œ m_targaData ë°°ì—´ì— ë¡œë“œí•¨
+// ì—¬ê¸°ì„œëŠ” ì˜ë„ì ìœ¼ë¡œ ì•ŒíŒŒ ì±„ë„ì´ ìžˆëŠ” 32ë¹„íŠ¸ Targa íŒŒì¼ë§Œ ë‹¤ë£¨ê³  ìžˆìœ¼ë©°, ì´ ê¸°ëŠ¥ì€ 24ë¹„íŠ¸ë¡œ ì €ìž¥ëœ Targa íŒŒì¼ì„ ê±°ë¶€í•˜ê³  ìžˆìŒ
 bool TextureClass::LoadTarga32Bit(char* filename)
 {
 	int error, bpp, imageSize, index, i, j, k;

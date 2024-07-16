@@ -1,5 +1,5 @@
-// TextureClass´Â ÅØ½ºÃÄ ÀÚ¿øÀ» ºÒ·¯¿À°í, ÇØÁ¦ÇÏ°í, Á¢±ÙÇÏ´Â ÀÛ¾÷À» Ä¸½¶È­ÇÔ
-// ¸ğµç ÅØ½ºÃÄ¿¡ ´ëÇØ °¢°¢ ÀÌ Å¬·¡½º°¡ ¸¸µé¾îÁ® ÀÖ¾î¾ß ÇÔ
+ï»¿// TextureClassëŠ” í…ìŠ¤ì³ ìì›ì„ ë¶ˆëŸ¬ì˜¤ê³ , í•´ì œí•˜ê³ , ì ‘ê·¼í•˜ëŠ” ì‘ì—…ì„ ìº¡ìŠí™”í•¨
+// ëª¨ë“  í…ìŠ¤ì³ì— ëŒ€í•´ ê°ê° ì´ í´ë˜ìŠ¤ê°€ ë§Œë“¤ì–´ì ¸ ìˆì–´ì•¼ í•¨
 
 #ifndef _TEXTURECLASS_H_
 #define _TEXTURECLASS_H_
@@ -33,15 +33,15 @@ public:
 	int GetHeight();
 
 private:
-	// Targa(tgaÆÄÀÏ, ·¡½ºÅÍ ±×·¡ÇÈ ÆÄÀÏ Æ÷¸Ë)À» ÀĞ´Â ÇÔ¼ö
-	// ´Ù¸¥ Çü½Äµµ ÀĞ°í ½ÍÀ¸¸é ¿©±â Ãß°¡
+	// Targa(tgaíŒŒì¼, ë˜ìŠ¤í„° ê·¸ë˜í”½ íŒŒì¼ í¬ë§·)ì„ ì½ëŠ” í•¨ìˆ˜
+	// ë‹¤ë¥¸ í˜•ì‹ë„ ì½ê³  ì‹¶ìœ¼ë©´ ì—¬ê¸° ì¶”ê°€
 	bool LoadTarga32Bit(char*);
 
 private:
-	unsigned char* m_targaData; // Targa µ¥ÀÌÅÍ º¸À¯
-	ID3D11Texture2D* m_texture; // DirectX°¡ ·»´õ¸µ¿¡ »ç¿ëÇÒ ±¸Á¶È­µÈ ÅØ½ºÃÄ µ¥ÀÌÅÍ º¸À¯
-	ID3D11ShaderResourceView* m_textureView; // ¼ÎÀÌ´õ°¡ ±×¸± ¶§ ÅØ½ºÃÄ µ¥ÀÌÅÍ¿¡ ¿¢¼¼½ºÇÏ´Â µ¥ »ç¿ëµÇ´Â ¸®¼Ò½º ºä
-	int m_width, m_height; // ÅØ½ºÃÄ Å©±â
+	unsigned char* m_targaData; // Targa ë°ì´í„° ë³´ìœ 
+	ID3D11Texture2D* m_texture; // DirectXê°€ ë Œë”ë§ì— ì‚¬ìš©í•  êµ¬ì¡°í™”ëœ í…ìŠ¤ì³ ë°ì´í„° ë³´ìœ 
+	ID3D11ShaderResourceView* m_textureView; // ì…°ì´ë”ê°€ ê·¸ë¦´ ë•Œ í…ìŠ¤ì³ ë°ì´í„°ì— ì—‘ì„¸ìŠ¤í•˜ëŠ” ë° ì‚¬ìš©ë˜ëŠ” ë¦¬ì†ŒìŠ¤ ë·°
+	int m_width, m_height; // í…ìŠ¤ì³ í¬ê¸°
 };
 
 #endif
