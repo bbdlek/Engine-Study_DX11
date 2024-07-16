@@ -1,0 +1,36 @@
+﻿// 텍스쳐 픽셀 셰이더에는 두 개의 전역변수가 있음
+// 첫번째는 텍스쳐 그 자체인 Texture2D shaderTexture
+// 이것은 텍스쳐 자원으로서 모델에 텍스쳐를 그릴 때 사용될 것
+// 
+// 두번째 새 변수는 SamplerState SampleType
+// 샘플러 상태(Sampler state)는 도형에 셰이딩이 이루어질 때 어떻게 텍스쳐의 픽셀이 씌여지는 지를 수정할 수 있게 해 줌
+// 일례로 너무 멀리 있어 겨우 8픽셀만큼의 영역을 차지하는 도형의 경우 이 샘플러 상태를 사용하여 원래 텍스쳐의 어떤 픽셀 혹은 어떤 픽셀 조합을 사용해야 할지 결정
+// 원본 텍스쳐는 256x256 픽셀의 크기일 수도 있으므로 매우 작아보이는 도형의 품질과 관련하여 이 결정은 매우 중요
+// 이 샘플러 상태를 TextureShaderClass 클래스에 만들고 연결하여 픽셀 셰이더에서 이를 이용할 수 있게 할 것임
+
+Texture2D shaderTexture : register(t0);
+SamplerState SampleType : register(s0);
+
+// 픽셀 셰이더에서 사용하는 PixelInputType 역시 색상값 대신 텍스쳐 좌표를 사용
+struct PixelInputType
+{
+    float4 position : SV_POSITION;
+    float2 tex : TEXCOORD0;
+};
+
+// 픽셀 셰이더가 HLSL의 샘플링 함수를 사용하도록 수정되었음
+// 샘플링 함수(sample function)은 위에서 정의한 샘플러 상태와 텍스쳐 좌표를 사용함
+// 도형의 표면 UV좌표 위치에 들어갈 픽셀 값을 결정하고 반환하기 위해 이 두 변수를 사용함
+
+////////////////////////////////////////////////////////////////////////////////
+// Pixel Shader
+////////////////////////////////////////////////////////////////////////////////
+float4 TexturePixelShader(PixelInputType input) : SV_TARGET
+{
+    float4 textureColor;
+
+    // Sample the pixel color from the texture using the sampler at this texture coordinate location.
+    textureColor = shaderTexture.Sample(SampleType, input.tex);
+
+    return textureColor;
+}
