@@ -36,6 +36,7 @@ private:
 	// Targa(tga파일, 래스터 그래픽 파일 포맷)을 읽는 함수
 	// 다른 형식도 읽고 싶으면 여기 추가
 	bool LoadTarga32Bit(char*);
+	bool LoadTarga24Bit(char*);
 
 private:
 	unsigned char* m_targaData; // Targa 데이터 보유

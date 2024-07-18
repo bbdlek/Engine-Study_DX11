@@ -243,3 +243,94 @@ bool TextureClass::LoadTarga32Bit(char* filename)
 
 	return true;
 }
+
+// 24Bit Targa 파일 불러오기용
+// 둘의 차이는 alpha 채널이 없는것.(투명도 표현 유무)
+// 따라서 각 채널당 8비트이므로 픽셀당 3바이트
+bool TextureClass::LoadTarga24Bit(char* filename)
+{
+	int error, bpp, imageSize, index, i, j, k;
+	FILE* filePtr;
+	unsigned int count;
+	TargaHeader targaFileHeader;
+	unsigned char* targaImage;
+
+	// Targa 파일을 바이너리 읽기 모드로 엽니다.
+	error = fopen_s(&filePtr, filename, "rb");
+	if (error != 0)
+	{
+		return false;
+	}
+
+	// 파일 헤더를 읽어들입니다.
+	count = (unsigned int)fread(&targaFileHeader, sizeof(TargaHeader), 1, filePtr);
+	if (count != 1)
+	{
+		return false;
+	}
+
+	// 헤더에서 중요한 정보를 가져옵니다.
+	m_height = (int)targaFileHeader.height;
+	m_width = (int)targaFileHeader.width;
+	bpp = (int)targaFileHeader.bpp;
+
+	// 24비트 이미지인지 확인합니다.
+	if (bpp != 24)
+	{
+		return false;
+	}
+
+	// 24비트 이미지 데이터의 크기를 계산합니다.
+	imageSize = m_width * m_height * 3;
+
+	// Targa 이미지 데이터를 위한 메모리를 할당합니다.
+	targaImage = new unsigned char[imageSize];
+
+	// Targa 이미지 데이터를 읽어들입니다.
+	count = (unsigned int)fread(targaImage, 1, imageSize, filePtr);
+	if (count != imageSize)
+	{
+		return false;
+	}
+
+	// 파일을 닫습니다.
+	error = fclose(filePtr);
+	if (error != 0)
+	{
+		return false;
+	}
+
+	// Targa 목적지 데이터를 위한 메모리를 할당합니다.
+	m_targaData = new unsigned char[imageSize];
+
+	// Targa 목적지 데이터 배열의 인덱스를 초기화합니다.
+	index = 0;
+
+	// Targa 이미지 데이터의 인덱스를 초기화합니다.
+	k = (m_width * m_height * 3) - (m_width * 3);
+
+	// 이제 Targa 이미지 데이터를 목적지 배열로 올바르게 복사합니다.
+	// Targa 형식은 거꾸로 저장되며 RGB 순서로 저장됩니다.
+	for (j = 0; j < m_height; j++)
+	{
+		for (i = 0; i < m_width; i++)
+		{
+			m_targaData[index + 0] = targaImage[k + 2];  // Red
+			m_targaData[index + 1] = targaImage[k + 1];  // Green
+			m_targaData[index + 2] = targaImage[k + 0];  // Blue
+
+			// Targa 데이터의 인덱스를 증가시킵니다.
+			k += 3;
+			index += 3;
+		}
+
+		// Targa 이미지 데이터 인덱스를 이전 행의 처음으로 되돌립니다.
+		k -= (m_width * 6);
+	}
+
+	// Targa 이미지 데이터를 복사한 후 메모리를 해제합니다.
+	delete[] targaImage;
+	targaImage = 0;
+
+	return true;
+}

@@ -211,7 +211,7 @@ bool TextureShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR
 	// AddressU와 AddressV는 좌표가 언제나 0.0f와 1.0f 사이에 있도록 해주는 Wrap으로 설정됨
 	// 모든 다른 샘플러 상태 description의 옵션들은 기본값으로 설정하였음
 	// Create a texture sampler state description.
-	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC; //https://learn.microsoft.com/ko-kr/windows/win32/api/d3d11/ne-d3d11-d3d11_filter
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;

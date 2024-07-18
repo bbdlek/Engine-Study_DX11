@@ -88,10 +88,10 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 
 	// 우선, 정점과 인덱스 데이터를 담아둘 두 개의 임시 배열을 만들고 나중에 최종 버퍼를 생성할 때 사용하도록 함
 	// Set the number of vertices in the vertex array.
-	m_vertexCount = 3;
+	m_vertexCount = 4;
 
 	// Set the number of indices in the index array.
-	m_indexCount = 3;
+	m_indexCount = 6;
 
 	// Create the vertex array.
 	vertices = new VertexType[m_vertexCount];
@@ -120,16 +120,23 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 	vertices[0].position = XMFLOAT3(-1.0f, -1.0f, 0.0f);  // 왼쪽 아래
 	vertices[0].texture = XMFLOAT2(0.0f, 1.0f);
 
-	vertices[1].position = XMFLOAT3(0.0f, 1.0f, 0.0f);  // 상단 가운데
-	vertices[1].texture = XMFLOAT2(0.5f, 0.0f);
+	vertices[1].position = XMFLOAT3(-1.0f, 1.0f, 0.0f);  // 왼쪽 상단
+	vertices[1].texture = XMFLOAT2(0.0f, 0.0f);
 
-	vertices[2].position = XMFLOAT3(1.0f, -1.0f, 0.0f);  // 오른쪽 아래
-	vertices[2].texture = XMFLOAT2(1.0f, 1.0f);
+	vertices[2].position = XMFLOAT3(1.0f, 1.0f, 0.0f);  // 오른쪽 상단
+	vertices[2].texture = XMFLOAT2(1.0f, 0.0f);
+
+	vertices[3].position = XMFLOAT3(1.0f, -1.0f, 0.0f);  // 오른쪽 아래
+	vertices[3].texture = XMFLOAT2(1.0f, 1.0f);
 
 	// 인덱스 배열에 값을 넣습니다.
 	indices[0] = 0;  // 왼쪽 아래
-	indices[1] = 1;  // 상단 가운데
-	indices[2] = 2;  // 오른쪽 아래
+	indices[1] = 1;  // 왼쪽 상단
+	indices[2] = 2;  // 오른쪽 상단
+
+	indices[3] = 2;  // 오른쪽 상단
+	indices[4] = 3;  // 오른쪽 아래
+	indices[5] = 0;  // 왼쪽 아래
 
 	// 정점 배열과 인덱스 배열이 채워졌으므로 이를 이용하여 정점 버퍼와 인덱스 버퍼를 만듦
 	// 두 버퍼를 만드는 일은 비슷한 과정을 거치게 됨
