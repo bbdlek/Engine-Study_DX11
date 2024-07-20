@@ -48,6 +48,12 @@
     <ClInclude Include="textureclass.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="lightshaderclass.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="lightclass.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -80,6 +86,12 @@
     <ClCompile Include="textureclass.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="lightshaderclass.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="lightclass.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Engine.rc">
@@ -105,6 +117,12 @@
       <Filter>소스 파일</Filter>
     </None>
     <None Include="texture.ps">
+      <Filter>소스 파일</Filter>
+    </None>
+    <None Include="light.vs">
+      <Filter>소스 파일</Filter>
+    </None>
+    <None Include="light.ps">
       <Filter>소스 파일</Filter>
     </None>
   </ItemGroup>
