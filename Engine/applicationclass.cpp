@@ -69,8 +69,8 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	// Create and initialize the light object
 	m_Light = new LightClass;
 
-	m_Light->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
-	m_Light->SetDirection(0.0f, 0.0f, 1.0f);
+	m_Light->SetDiffuseColor(0.0f, 1.0f, 0.0f, 1.0f);
+	m_Light->SetDirection(-1.0f, 0.0f, 1.0f);
 
 	// TEST
 	// 현재 실행 파일의 경로 가져오기
@@ -159,7 +159,7 @@ bool ApplicationClass::Frame()
 	bool result;
 
 	// Update the rotation variable each frame.
-	rotation -= 0.0174532925f * 0.1f;
+	rotation -= 0.0174532925f * 0.5f;
 	if (rotation < 0.0f)
 	{
 		rotation += 360.0f;
