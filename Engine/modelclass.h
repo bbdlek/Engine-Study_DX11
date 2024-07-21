@@ -3,10 +3,11 @@
 
 #include <d3d11.h>
 #include <DirectXMath.h>
-
+#include <fstream>
 #include "textureclass.h"
 
 using namespace DirectX;
+using namespace std;
 
 class ModelClass
 {
@@ -24,12 +25,19 @@ private:
 		XMFLOAT4 color;
 	};*/
 
+	struct ModelType
+	{
+		float x, y, z;
+		float tu, tv;
+		float nx, ny, nz;
+	};
+
 public:
 	ModelClass();
 	ModelClass(const ModelClass&);
 	~ModelClass();
 
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, char*);
 	void Shutdown();
 	void Render(ID3D11DeviceContext*);
 
@@ -47,6 +55,9 @@ private:
 	bool LoadTexture(ID3D11Device*, ID3D11DeviceContext*, char*);
 	void ReleaseTexture();
 
+	bool LoadModel(char*);
+	void ReleaseModel();
+
 private:
 	// 꼭짓점 및 인덱스 버퍼와 각 버퍼의 크기를 추적하기 위한 두 개의 정수
 	ID3D11Buffer* m_vertexBuffer, * m_indexBuffer;
@@ -54,6 +65,7 @@ private:
 
 	// 변수 m_Texture은 이 모델의 텍스쳐 자원을 불러오고, 반환하고, 접근하는 데 사용
 	TextureClass* m_Texture;
+	ModelType* m_model;
 };
 
 #endif // !_MODELCLASS_H_

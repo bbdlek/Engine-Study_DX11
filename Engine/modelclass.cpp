@@ -6,6 +6,7 @@ ModelClass::ModelClass()
 	m_indexBuffer = 0;
 
 	m_Texture = 0;
+	m_model = 0;
 }
 
 ModelClass::ModelClass(const ModelClass&)
@@ -18,9 +19,16 @@ ModelClass::~ModelClass()
 
 // 꼭짓점 및 인덱스 버퍼에 대한 초기화 함수를 호출
 // 이제 초기화는 모델이 사용할 텍스처의 파일 이름과 장치 컨텍스트를 입력으로 사용
-bool ModelClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* textureFilename)
+bool ModelClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* modelFilename, char* textureFilename)
 {
 	bool result;
+
+	// Load in model data
+	result = LoadModel(modelFilename);
+	if (!result)
+	{
+		return false;
+	}
 
 
 	// Initialize the vertex and index buffers.
@@ -49,6 +57,9 @@ void ModelClass::Shutdown()
 
 	// Shutdown the vertex and index buffers.
 	ShutdownBuffers();
+
+	// Release the model data
+	ReleaseModel();
 
 	return;
 }
@@ -85,13 +96,7 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
 	HRESULT result;
-
-	// 우선, 정점과 인덱스 데이터를 담아둘 두 개의 임시 배열을 만들고 나중에 최종 버퍼를 생성할 때 사용하도록 함
-	// Set the number of vertices in the vertex array.
-	m_vertexCount = 3;
-
-	// Set the number of indices in the index array.
-	m_indexCount = 3;
+	int i;
 
 	// Create the vertex array.
 	vertices = new VertexType[m_vertexCount];
@@ -106,33 +111,19 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 	{
 		return false;
 	}
-	
-	// 정점/인덱스 배열에 삼각형의 각 점과 그 순서를 채워넣음
-	// 반드시 주의해야 할 점은, 이것을 그리기 위해서는 점들을 시계 방향으로 만들어야 한다는 것
-	// 만약 반시계 방향으로 만들게 되면 DirectX에서 이 삼각형은 반대편을 바라본다고 판단하며 backface culling에 의해 그려지지 않게 됨
-	// 따라서 GPU에게 도형을 그리도록 할 때 이 순서를 기억하는 것이 중요
-	// 여기서 정점의 description을 작성하기 때문에 색상 역시 정해주게 됨. 여기서는 녹색
 
-	// 정점 배열에 값을 넣습니다.
+	// 정점과 인덱스 배열을 불러오는 것 역시 조금 바뀜
+	// 직접 그 값을 넣어주는 대신, for 루프를 돌면서 m_model 배열에 있는 정보들을 정점 배열로 복사
+	// 인덱스 배열은 불러올 때 해당 배열에서의 위치가 곧 인덱스 번호이기 때문에 간단하게 지정 가능
+	 // Load the vertex array and index array with data.
+	for (i = 0; i < m_vertexCount; i++)
+	{
+		vertices[i].position = XMFLOAT3(m_model[i].x, m_model[i].y, m_model[i].z);
+		vertices[i].texture = XMFLOAT2(m_model[i].tu, m_model[i].tv);
+		vertices[i].normal = XMFLOAT3(m_model[i].nx, m_model[i].ny, m_model[i].nz);
 
-	// 이제 정점 배열에는 색상 구성요소 대신 텍스처 좌표 구성요소가 있음
-	// 텍스처 벡터는 항상 U가 먼저이고 V가 두 번째
-	vertices[0].position = XMFLOAT3(-1.0f, -1.0f, 0.0f);  // 왼쪽 아래
-	vertices[0].texture = XMFLOAT2(0.0f, 1.0f);
-	vertices[0].normal = XMFLOAT3(0.0f, 0.0f, -1.0f);
-
-	vertices[1].position = XMFLOAT3(0.0f, 1.0f, 0.0f);  // 상단 가운데
-	vertices[1].texture = XMFLOAT2(0.5f, 0.0f);
-	vertices[1].normal = XMFLOAT3(0.0f, 0.0f, -1.0f);
-
-	vertices[2].position = XMFLOAT3(1.0f, -1.0f, 0.0f);  // 오른쪽 아래
-	vertices[2].texture = XMFLOAT2(1.0f, 1.0f);
-	vertices[2].normal = XMFLOAT3(0.0f, 0.0f, -1.0f);
-
-	// 인덱스 배열에 값을 넣습니다.
-	indices[0] = 0;  // 왼쪽 아래
-	indices[1] = 1;  // 상단 가운데
-	indices[2] = 2;  // 오른쪽 아래
+		indices[i] = i;
+	}
 
 	// 정점 배열과 인덱스 배열이 채워졌으므로 이를 이용하여 정점 버퍼와 인덱스 버퍼를 만듦
 	// 두 버퍼를 만드는 일은 비슷한 과정을 거치게 됨
@@ -264,6 +255,71 @@ void ModelClass::ReleaseTexture()
 		m_Texture->Shutdown();
 		delete m_Texture;
 		m_Texture = 0;
+	}
+
+	return;
+}
+
+bool ModelClass::LoadModel(char* filename)
+{
+	ifstream fin;
+	char input;
+	int i;
+
+	// Open the model file
+	fin.open(filename);
+
+	// if it could not open the file then exit
+	if (fin.fail())
+	{
+		return false;
+	}
+
+	// Read up to the value of vertex count
+	fin.get(input);
+	while (input != ':')
+	{
+		fin.get(input);
+	}
+
+	// Read in the vertex count
+	fin >> m_vertexCount;
+
+	// Set the number of indices to be the same as the vertex count
+	m_indexCount = m_vertexCount;
+
+	// Create the model using the vertex count that was read in
+	m_model = new ModelType[m_vertexCount];
+
+	// Read up to the beginning of the data
+	fin.get(input);
+	while (input != ':')
+	{
+		fin.get(input);
+	}
+	fin.get(input);
+	fin.get(input);
+
+	// Read in the vertex data
+	for (i = 0; i < m_vertexCount; i++)
+	{
+		fin >> m_model[i].x >> m_model[i].y >> m_model[i].z;
+		fin >> m_model[i].tu >> m_model[i].tv;
+		fin >> m_model[i].nx >> m_model[i].ny >> m_model[i].nz;
+	}
+
+	// Close the model file
+	fin.close();
+
+	return true;
+}
+
+void ModelClass::ReleaseModel()
+{
+	if (m_model)
+	{
+		delete[] m_model;
+		m_model = 0;
 	}
 
 	return;
