@@ -73,8 +73,9 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	// Create and initialize the light object
 	m_Light = new LightClass;
 
+	m_Light->SetAmbientColor(0.15f, 0.15f, 0.15f, 1.0f);
 	m_Light->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
-	m_Light->SetDirection(0.0f, 0.0f, 1.0f);
+	m_Light->SetDirection(1.0f, 0.0f, 0.0f);
 
 	// TEST
 	// 현재 실행 파일의 경로 가져오기
@@ -210,7 +211,7 @@ bool ApplicationClass::Render(float rotation)
 	// 두 행렬을 만들고 난뒤 올바른 순서(SRT)로 곱하여 회전을 먼저 하고 변환을 마지막으로 하여 결합된 변환을 갖는 최종 월드 행렬을 만듦
 	// 그런 다음 일반 뷰 및 투영 행렬과 함께 월드 행렬만 셰이더로 보내 라이트 셰이더에서 렌더링할 때 큐브 모델을 회전하고 변환
 	rotateMatrix = XMMatrixRotationY(rotation); // Build the rotation matrix
-	translateMatrix = XMMatrixTranslation(-2.0f, 0.0f, 0.0f);  // Build the translation matrix.
+	translateMatrix = XMMatrixTranslation(0.0f, 0.0f, 0.0f);  // Build the translation matrix.
 
 	// Multiply them together to create the final world transformation matrix.
 	worldMatrix = XMMatrixMultiply(rotateMatrix, translateMatrix);
@@ -220,33 +221,7 @@ bool ApplicationClass::Render(float rotation)
 
 	// Render the model using the light shader.
 	result = m_LightShader->Render(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, m_Model->GetTexture(),
-		m_Light->GetDirection(), m_Light->GetDiffuseColor());
-	if (!result)
-	{
-		return false;
-	}
-
-	// 두 번째 변환을 위해 스케일링 추가
-	// 큐브를 균일하게 절반으로 줄인 다음 회전과 변환도 적용
-	// 따라서 세 축 모두에 0.5를 사용하여 스케일 행렬을 만드는 것으로 시작
-	// 그런 다음 Y 회전 변수를 사용하여 위와 동일한 회전 행렬을 만듦
-	// 그런 다음 오른쪽으로 2 단위 이동하여 이 큐브를 다른 방향으로 이동하는 변환 행렬을 만듦
-	// 세 행렬을 모두 구하면 두 번의 곱셈을 수행하고 모든 변환을 최종 월드 행렬에 저장하여 올바른 SRT(Scale, Rotate, Transform)순서로 결합
-	// 그 다음 라이트 셰이더에서 새 월드 행렬을 설정하고 큐브 모델을 다시 렌더링하여 원하는 변환이 적용된 장면에서 두 번째 큐브 확인
-	scaleMatrix = XMMatrixScaling(0.5f, 0.5f, 0.5f);  // Build the scaling matrix.
-	rotateMatrix = XMMatrixRotationY(rotation);  // Build the rotation matrix.
-	translateMatrix = XMMatrixTranslation(2.0f, 0.0f, 0.0f);  // Build the translation matrix.
-
-	// Multiply the scale, rotation, and translation matrices together to create the final world transformation matrix.
-	srMatrix = XMMatrixMultiply(scaleMatrix, rotateMatrix);
-	worldMatrix = XMMatrixMultiply(srMatrix, translateMatrix);
-
-	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	m_Model->Render(m_Direct3D->GetDeviceContext());
-
-	// Render the model using the light shader.
-	result = m_LightShader->Render(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, m_Model->GetTexture(),
-		m_Light->GetDirection(), m_Light->GetDiffuseColor());
+		m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor());
 	if (!result)
 	{
 		return false;

@@ -8,6 +8,7 @@ SamplerState SampleType : register(s0);
 
 cbuffer LightBuffer
 {
+    float ambientColor;
     float4 diffuseColor;
     float3 lightDirection;
     float padding;
@@ -42,15 +43,29 @@ float4 LightPixelShader(PixelInputType input) : SV_TARGET
     // 여기서 조명 방정식이 구현됨
     // 빛의 조도(Intensity)가 삼각형의 법선 벡터, 그리고 빛의 방향 벡터 사이의 내적으로 계산됨
     
+    // 결과의 색상값을 기본으로 주변광 값으로 맞춤
+    // 이제 모든 픽셀들은 최소한 주변광 값을 가지게 됨
+    // Set the default output color to the ambient light value for all pixels
+    color = ambientColor;
+    
      // Invert the light direction for calculations.
     lightDir = -lightDirection;
 
     // Calculate the amount of light on this pixel.
     lightIntensity = saturate(dot(input.normal, lightDir));
     
-    // 마지막으로 빛의 세기가 텍스쳐 픽셀의 값과 조합되어 최종 색상을 만들어냄.
-     // Determine the final amount of diffuse color based on the diffuse color combined with the light intensity.
-    color = saturate(diffuseColor * lightIntensity);
+    // 법선과 빛의 방향의 내적이 0보다 큰지 확인
+    // 만약 크다면 조명값을 주변광에 더하고, 그렇지 않다면 더하지 않아야 함
+    // 이유는 간혹 음수로 계산되는 빛의 밝기 값이 주변광의 값을 깎아먹는 경우가 생기기 때문
+    // (주변광 보다 어두운 부분이 생기는 경우가 생김)
+    if (lightIntensity > 0.0f)
+    {
+        // Determine the final diffuse color based on the diffuse color and the amount of light intensity
+        color += (diffuseColor * lightIntensity);
+    }
+    
+    // 주변광과 조명의 조합의 결과가 1이 넘을 수 있으므로 saturate 함수로 최종 색상이 적절한 값이 되도록 잘라냄
+    color = saturate(color);
 
     // Multiply the texture pixel and the final diffuse color to get the final pixel color result.
     color = color * textureColor;
