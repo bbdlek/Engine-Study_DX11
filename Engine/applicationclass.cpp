@@ -8,7 +8,7 @@ ApplicationClass::ApplicationClass()
 	m_Camera = 0;
 	m_Model = 0;
 	m_LightShader = 0;
-	m_Light = 0;
+	m_Lights = 0;
 }
 
 
@@ -42,10 +42,11 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	m_Camera = new CameraClass;
 
 	// Set the initial position of the camera.
-	m_Camera->SetPosition(0.0f, 0.0f, -10.0f);
+	m_Camera->SetPosition(0.0f, 2.0f, -12.0f);
+	m_Camera->Render();
 
 	// Set the file name of the model.
-	strcpy_s(modelFilename, "../Engine/data/sphere.txt");
+	strcpy_s(modelFilename, "../Engine/data/plane.txt");
 
 	// Create and initialize the model object.
 	m_Model = new ModelClass;
@@ -70,14 +71,25 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
-	// Create and initialize the light object
-	m_Light = new LightClass;
+	// 4개의 조명 배열(빨강, 초록, 파랑, 흰색)
+	// Set the number of lights we will use.
+	m_numLights = 4;
 
-	m_Light->SetAmbientColor(0.15f, 0.15f, 0.15f, 1.0f);
-	m_Light->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
-	m_Light->SetDirection(1.0f, 0.0f, 1.0f);
-	m_Light->SetSpecularColor(1.0f, 1.0f, 1.0f, 1.0f);
-	m_Light->SetSpecularPower(32.0f);
+	// Create and initialize the light objects array.
+	m_Lights = new LightClass[m_numLights];
+
+	// Manually set the color and position of each light.
+	m_Lights[0].SetDiffuseColor(1.0f, 0.0f, 0.0f, 1.0f);  // Red
+	m_Lights[0].SetPosition(-3.0f, 1.0f, 3.0f);
+
+	m_Lights[1].SetDiffuseColor(0.0f, 1.0f, 0.0f, 1.0f);  // Green
+	m_Lights[1].SetPosition(3.0f, 1.0f, 3.0f);
+
+	m_Lights[2].SetDiffuseColor(0.0f, 0.0f, 1.0f, 1.0f);  // Blue
+	m_Lights[2].SetPosition(-3.0f, 1.0f, -3.0f);
+
+	m_Lights[3].SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);  // White
+	m_Lights[3].SetPosition(3.0f, 1.0f, -3.0f);
 
 	// TEST
 	// 현재 실행 파일의 경로 가져오기
@@ -118,11 +130,11 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
 void ApplicationClass::Shutdown()
 {
-	// Release the light object.
-	if (m_Light)
+	// Release the light objects.
+	if (m_Lights)
 	{
-		delete m_Light;
-		m_Light = 0;
+		delete[] m_Lights;
+		m_Lights = 0;
 	}
 
 	// Release the light shader object.
@@ -162,18 +174,10 @@ void ApplicationClass::Shutdown()
 
 bool ApplicationClass::Frame()
 {
-	static float rotation = 0.0f;
 	bool result;
 
-	// Update the rotation variable each frame.
-	rotation -= 0.0174532925f * 0.1f;
-	if (rotation < 0.0f)
-	{
-		rotation += 360.0f;
-	}
-
 	// Render the graphics scene.
-	result = Render(rotation);
+	result = Render();
 	if (!result)
 	{
 		return false;
@@ -191,41 +195,42 @@ bool ApplicationClass::Frame()
 // 그리고 나서 ModelClass::Render 함수를 호출하여 그래픽 파이프라인에 삼각형 모델을 그리도록 함
 // 이미 준비한 정점들로 셰이더를 호출하여 셰이더는 모델 정보와 정점을 배치시키기 위한 세 행렬을 사용하여 정점들을 그려냄
 // 이제 삼각형이 백버퍼에 그려집니다. 씬 그리기가 완료되었다면 EndScene을 호출하여 화면에 표시하도록 함
-bool ApplicationClass::Render(float rotation)
+bool ApplicationClass::Render()
 {
 	XMMATRIX worldMatrix, viewMatrix, projectionMatrix, rotateMatrix, translateMatrix, scaleMatrix, srMatrix;
+	XMFLOAT4 diffuseColor[4], lightPosition[4];
+	int i;
 	bool result;
 
 
 	// Clear the buffers to begin the scene.
 	m_Direct3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
 
-	// Generate the view matrix based on the camera's position.
-	m_Camera->Render();
 
 	// Get the world, view, and projection matrices from the camera and d3d objects.
 	m_Direct3D->GetWorldMatrix(worldMatrix);
 	m_Camera->GetViewMatrix(viewMatrix);
 	m_Direct3D->GetProjectionMatrix(projectionMatrix);
 
-	// rotation 변수를 사용하여 Y축을 중심으로 회전하기 위한 회전 행렬을 만듦
-	// 그 다음 큐브를 왼쪽으로 2단위 이동시키는 변환 행렬을 만듦
-	// 두 행렬을 만들고 난뒤 올바른 순서(SRT)로 곱하여 회전을 먼저 하고 변환을 마지막으로 하여 결합된 변환을 갖는 최종 월드 행렬을 만듦
-	// 그런 다음 일반 뷰 및 투영 행렬과 함께 월드 행렬만 셰이더로 보내 라이트 셰이더에서 렌더링할 때 큐브 모델을 회전하고 변환
-	rotateMatrix = XMMatrixRotationY(rotation); // Build the rotation matrix
-	translateMatrix = XMMatrixTranslation(0.0f, 0.0f, 0.0f);  // Build the translation matrix.
+	// 4개의 포인트 라이트에서 두 개의 배열(색상 및 위치)을 설정
+	// 하면 8개의 서로 다른 조명 구소 요소 대신 두 개의 배열 변수를 더 쉽게 보낼 수 있음
+	// Get the light properties.
+	for (i = 0; i < m_numLights; i++)
+	{
+		// Create the diffuse color array from the four light colors.
+		diffuseColor[i] = m_Lights[i].GetDiffuseColor();
 
-	// Multiply them together to create the final world transformation matrix.
-	worldMatrix = XMMatrixMultiply(rotateMatrix, translateMatrix);
+		// Create the light position array from the four light positions.
+		lightPosition[i] = m_Lights[i].GetPosition();
+	}
 
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	m_Model->Render(m_Direct3D->GetDeviceContext());
 
-	// Render the model using the light shader.
+	// 조명 셰이더와 4개의 점 조명을 사용하여 모델을 렌더링
 	// Render the model using the light shader.
 	result = m_LightShader->Render(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, m_Model->GetTexture(),
-		m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor(),
-		m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
+		diffuseColor, lightPosition);
 	if (!result)
 	{
 		return false;
