@@ -11,7 +11,8 @@ cbuffer LightBuffer
     float ambientColor;
     float4 diffuseColor;
     float3 lightDirection;
-    float padding;
+    float specularPower;
+    float4 specularColor;
 };
 
 
@@ -23,6 +24,7 @@ struct PixelInputType
     float4 position : SV_POSITION;
     float2 tex : TEXCOORD0;
     float3 normal : NORMAL;
+    float3 viewDirection : TEXCOORD1;
 };
 
 
@@ -35,6 +37,8 @@ float4 LightPixelShader(PixelInputType input) : SV_TARGET
     float3 lightDir;
     float lightIntensity;
     float4 color;
+    float3 reflection;
+    float4 specular;
 
 
     // Sample the pixel color from the texture using the sampler at this texture coordinate location.
@@ -48,7 +52,10 @@ float4 LightPixelShader(PixelInputType input) : SV_TARGET
     // Set the default output color to the ambient light value for all pixels
     color = ambientColor;
     
-     // Invert the light direction for calculations.
+    // Initialize the specular color
+    specular = float4(0.0f, 0.0f, 0.0f, 0.0f);
+    
+    // Invert the light direction for calculations.
     lightDir = -lightDirection;
 
     // Calculate the amount of light on this pixel.
@@ -62,13 +69,28 @@ float4 LightPixelShader(PixelInputType input) : SV_TARGET
     {
         // Determine the final diffuse color based on the diffuse color and the amount of light intensity
         color += (diffuseColor * lightIntensity);
+        
+        // Saturate the ambient and diffuse color
+        color = saturate(color);
+        
+        // 픽셀 셰이더에서의 정반사 벡터는 주어진 빛의 강도가 0보다 큰 경우에만 여기서 계산됨
+        // Calculate the reflection vector based on the light intensity, normal vector, and light direction.
+        reflection = normalize(2.0f * lightIntensity * input.normal - lightDir);
+        
+        // 정반사광의 총량은 반사 벡터와 보는 방향을 이용하여 계산됨
+        // 관원과 카메라의 방향 사이의 각도가 작을수록 더 많은 정반사광이 비쳐 들어올 것임
+        // 그런 결과는 specularPower 값 만큼의 제곱으로 나타나게 함
+        // specularPower의 값이 작을수록 마지막에 빛이 더 많이 들어옴
+        // Determine the amount of specular light based on the reflection vector, viewing direction, and specular power.
+        specular = pow(saturate(dot(reflection, input.viewDirection)), specularPower);
+
     }
-    
-    // 주변광과 조명의 조합의 결과가 1이 넘을 수 있으므로 saturate 함수로 최종 색상이 적절한 값이 되도록 잘라냄
-    color = saturate(color);
 
     // Multiply the texture pixel and the final diffuse color to get the final pixel color result.
     color = color * textureColor;
+    
+    // Add the specular component last to the output color.
+    color = saturate(color + specular);
 
     return color;
 }
